@@ -55,6 +55,9 @@ public:
     vector<string> attributesOut() {
     	return attributes;
     }
+    int attSize() {
+    	return attributes.size();
+    }
     
     vector< vector<string> > select(int attr, string value);
     vector< vector<string> > select(int attr, int attr2);

@@ -221,23 +221,84 @@ relation* Database::ruler( RuleClass* rule ) {
 	vector< relation* > tempRels;
 
 	for (int i = 0; i < preds.size(); i++) {
-//			make a relation through queryFind()
-		relation* a = new relation( preds[i]->nameOut() );
-		a = queryFind( a,  preds[i] );
-		tempRels.push_back(a);
-	}
-
-	for (int i = 0; i < preds.size(); i++) {
 		string name = preds[i]->nameOut();
 	    int index = relationIndex( name );
 	    if ( index >= 0 ) {
 	    	relation* a = queryFind( relations[index],  preds[i] );
 	    	tempRels.push_back(a);
+	    }else {
+	    	return NULL;
 	    }
 	}
+	if ( tempRels.empty ) {
+		return NULL;
+	}
+	relation* rel = tempRels[0];
+	for (int j = 1; j < tempRels.size(); j++) {
+		rel = naturalJoin( tempRels.at(0), tempRels.at(j) );
+	}
 
-	return new relation( "new rule" );
+	return rel;
 }
+
+relation* Database::naturalJoin( relation* a, relation* b ) {
+	relation* tempRel = new relation( a->nameOut() );
+	int common = 0;
+	for (int i = 0; i < a->attSize(); i++) {
+		for (int j = 0; j < b->attSize(); j++) {
+			if ( a->attribute_at(i) == b->attribute_at(j) ) {
+//					add the common attribute to the new relation
+				common++;
+			}
+		}
+	}
+	if (common == 0) {
+		//	none in common case
+		tempRel = noCommon( a, b );
+	}else if ( common == a->size() || common == b->size() ) {
+		// all of them are in common for at least one relation
+		tempRel = allCommon( a, b );
+	}else {
+		// some are in common, but not all
+		tempRel = someCommon( a, b );
+	}
+
+	return tempRel;
+}
+
+relation* Database::noCommon(relation* a, relation* b) {
+	vector< vector<string> > Atuples = a->tuplesOut();
+	vector< vector<string> > Btuples = b->tuplesOut();
+	vector< vector<string> > tuples;
+
+	for (int i = 0; i < Atuples.size(); i++) {
+		for (int j = 0; j < Btuples.size(); j++) {
+			vector<string> tempTuple = Atuples[i];
+			for (int k = 0; k < Btuples[j].size(); k++) {
+				tempTuple.push_back( Btuples[j][k] );
+			}
+			tuples.push_back( tempTuple );
+		}
+	}
+
+	relation* rel = new relation( a->nameOut() );
+	rel->addTuples( tuples );
+	return rel;
+}
+
+relation* Database::someCommon(relation* a, relation* b) {
+
+
+
+}
+
+relation* Database::allCommon(relation* a, relation* b) {
+
+
+
+}
+
+
 
 
 

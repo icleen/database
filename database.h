@@ -57,6 +57,9 @@ private:
     relation* ruler2( RuleClass* rule );
 
     relation* naturalJoin( relation* a, relation* b );
+    relation* noCommon( relation* a, relation* b );
+    relation* someCommon( relation* a, relation* b );
+    relation* allCommon( relation* a, relation* b );
 
 public:
     Database(datalogClass* data) : datalog(data) {
