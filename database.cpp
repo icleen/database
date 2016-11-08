@@ -288,7 +288,23 @@ relation* Database::noCommon(relation* a, relation* b) {
 
 relation* Database::someCommon(relation* a, relation* b) {
 
+	vector< vector<string> > Atuples = a->tuplesOut();
+	vector< vector<string> > Btuples = b->tuplesOut();
+	vector< vector<string> > tuples;
 
+	for (int i = 0; i < Atuples.size(); i++) {
+		for (int j = 0; j < Btuples.size(); j++) {
+			vector<string> tempTuple = Atuples[i];
+			for (int k = 0; k < Btuples[j].size(); k++) {
+				tempTuple.push_back( Btuples[j][k] );
+			}
+			tuples.push_back( tempTuple );
+		}
+	}
+
+	relation* rel = new relation( a->nameOut() );
+	rel->addTuples( tuples );
+	return rel;
 
 }
 
