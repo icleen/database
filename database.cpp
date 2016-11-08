@@ -230,7 +230,7 @@ relation* Database::ruler( RuleClass* rule ) {
 	    	return NULL;
 	    }
 	}
-	if ( tempRels.empty ) {
+	if ( tempRels.empty() ) {
 		return NULL;
 	}
 	relation* rel = tempRels[0];
@@ -267,6 +267,7 @@ relation* Database::naturalJoin( relation* a, relation* b ) {
 }
 
 relation* Database::noCommon(relation* a, relation* b) {
+	cout << "no common\n";
 	vector< vector<string> > Atuples = a->tuplesOut();
 	vector< vector<string> > Btuples = b->tuplesOut();
 	vector< vector<string> > tuples;
@@ -287,6 +288,7 @@ relation* Database::noCommon(relation* a, relation* b) {
 }
 
 relation* Database::someCommon(relation* a, relation* b) {
+	cout << "Some common\n";
 
 	vector< vector<string> > Atuples = a->tuplesOut();
 	vector< vector<string> > Btuples = b->tuplesOut();
@@ -309,12 +311,33 @@ relation* Database::someCommon(relation* a, relation* b) {
 }
 
 relation* Database::allCommon(relation* a, relation* b) {
+	cout << "All common\n";
 
-
+	while ()
 
 }
 
+vector< vector<string> > bob( vector< vector<string> > a, vector< vector<string> > b, int a1, int b1) {
+	vector< vector<string> > x = a;
+	for (int i = 0; i < a.size(); i++) {
+		for (int j = 0; j < b.size(); j++) {
+			if ( a[i][a1] == b[j][b1] ) {
+				for (int k = 0; k < b[j].size(); k++) {
+					if (k != b1) {
+						x[i].push_back(b[j][k]);
+					}
+				}
+			}
+		}
+	}
+	return x;
+}
 
+void mergeVectors( vector<string> &a, vector<string> b ) {
+	for (int i = 0; i < b.size(); i++) {
+		a.push_back(b[i]);
+	}
+}
 
 
 
