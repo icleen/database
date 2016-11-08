@@ -1,0 +1,10 @@
+Schemes:
+    a(A,B)
+
+Facts:
+    a('a','b').
+
+Rules:
+
+Queries:
+    a(X,Y)?

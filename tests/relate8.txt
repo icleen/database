@@ -1,0 +1,25 @@
+Schemes:
+    A(A,B,C)
+    B(A,B,C,D)
+    
+Facts:
+    A('1','1','1'). A('1','2','3'). A('1','2','1'). A('1','1','3'). 
+    A('5','lakjsdf','death'). A('hello','world','world').
+    B('1','1','1','1'). B('1','2','1','2'). B('2','1','1','2'). B('2','1','2','1').
+    
+Rules:
+    C(X,Y) :- A(X,Y,Z).
+    C(X,Y) :- A(X,R,Q), B(Y,R,Q,Z).
+    C(X,Y) :- D(Y,X).
+    
+Queries:
+    A(X,Z,Y)?
+    A(a,b,c)?
+    A(X,Z,X)?
+    A(N,N,N)?
+    A(X,X,Z)?
+    A('3',a,b)?
+    A(h,w,w)?
+    A(a,b,'1')?
+    A(N,M,N)?
+    A(a,b,'death')?
