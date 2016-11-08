@@ -242,31 +242,14 @@ relation* Database::ruler( RuleClass* rule ) {
 }
 
 relation* Database::naturalJoin( relation* a, relation* b ) {
-	relation* tempRel = new relation( a->nameOut() );
-	int common = 0;
-	for (int i = 0; i < a->attSize(); i++) {
-		for (int j = 0; j < b->attSize(); j++) {
-			if ( a->attribute_at(i) == b->attribute_at(j) ) {
-//					add the common attribute to the new relation
-				common++;
-			}
-		}
-	}
-	if (common == 0) {
-		//	none in common case
-		tempRel = noCommon( a, b );
-	}else if ( common == a->size() || common == b->size() ) {
-		// all of them are in common for at least one relation
-		tempRel = allCommon( a, b );
-	}else {
-		// some are in common, but not all
-		tempRel = someCommon( a, b );
-	}
+	projectList.clear();
+	relation* tempRel = joinAll( a, b );
+	addToProjectList( a->attributesOut() );
 
 	return tempRel;
 }
 
-relation* Database::noCommon(relation* a, relation* b) {
+relation* Database::joinAll(relation* a, relation* b) {
 	cout << "no common\n";
 	vector< vector<string> > Atuples = a->tuplesOut();
 	vector< vector<string> > Btuples = b->tuplesOut();
@@ -284,8 +267,33 @@ relation* Database::noCommon(relation* a, relation* b) {
 
 	relation* rel = new relation( a->nameOut() );
 	rel->addTuples( tuples );
+	rel->addAttributes( a->attributesOut() );
+	rel->addAttributes( b->attributesOut() );
 	return rel;
 }
+
+
+void Database::addToProjectList( vector<string> atts ) {
+
+	for (int i = 0; i < atts.size(); i++) {
+		if ( !inProjectList( atts[i] ) ) {
+			myNode* n = new myNode();
+			n->name = atts[i];
+			n->index = i;
+			projectList.push_back(n);
+		}
+	}
+
+}
+
+bool Database::inProjectList( string name ) {
+	for (int i = 0; i < projectList.size(); i++) {
+		if (projectList[i]->name == name) {
+			return true;
+		}
+	}
+}
+
 
 relation* Database::someCommon(relation* a, relation* b) {
 	cout << "Some common\n";
@@ -312,8 +320,6 @@ relation* Database::someCommon(relation* a, relation* b) {
 
 relation* Database::allCommon(relation* a, relation* b) {
 	cout << "All common\n";
-
-	while ()
 
 }
 
