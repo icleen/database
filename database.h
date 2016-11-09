@@ -62,6 +62,7 @@ private:
     relation* allCommon( relation* a, relation* b );
     void addToProjectList( vector<string> s );
     bool inProjectList( string name, int index );
+    void mergeTuples( vector< vector<string> > &a, const vector< vector<string> > &b, int a1, int b1);
     int totalAtts;
     queue<int> selectList;
 
