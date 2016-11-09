@@ -7,7 +7,7 @@
 //
 
 void Database::convertRules( vector<RuleClass*> rules ) {
-	cout << "ConvertRules\n";
+//	cout << "ConvertRules\n";
 	int relationSize = 0;
 	do {
 		relationSize = facts();
@@ -26,15 +26,15 @@ void Database::convertRules( vector<RuleClass*> rules ) {
 }
 
 relation* Database::ruler( RuleClass* rule ) {
-	cout << "Ruler\n";
+//	cout << "Ruler\n";
 	PredicateClass* head = rule->headOut();
-	cout << head->nameOut() << " ";
+//	cout << head->nameOut() << " ";
 	vector< PredicateClass* > preds = rule->predicatesOut();
 	vector< relation* > tempRels;
 
 	for (int i = 0; i < preds.size(); i++) {
 		string name = preds[i]->nameOut();
-		cout << name << endl;
+//		cout << name << endl;
 	    int index = relationIndex( name );
 	    if ( index >= 0 ) {
 	    	relation* a = queryFind( relations[index],  preds[i] );
@@ -61,7 +61,7 @@ relation* Database::ruler( RuleClass* rule ) {
 
 
 relation* Database::naturalJoin( relation* a, relation* b ) {
-	cout << "naturalJoin\n";
+//	cout << "naturalJoin\n";
 	projectList.clear();
 	totalAtts = 0;
 	relation* tempRel = joinAll( a, b );
@@ -79,7 +79,7 @@ relation* Database::naturalJoin( relation* a, relation* b ) {
 
 
 relation* Database::joinAll( relation* a, relation* b ) {
-	cout << "join all\n";
+//	cout << "join all\n";
 	vector< vector<string> > Atuples = a->tuplesOut();
 	vector< vector<string> > Btuples = b->tuplesOut();
 	vector< vector<string> > tuples;
@@ -111,14 +111,14 @@ relation* Database::joinAll( relation* a, relation* b ) {
 
 
 void Database::addToProjectList( vector<string> atts ) {
-	cout << "Adding to project list\n";
+//	cout << "Adding to project list\n";
 	int i;
 	for (i = 0; i < atts.size(); i++) {
 		if ( !inProjectList( atts[i], i ) ) {
 			myNode* n = new myNode();
 			n->name = atts[i];
 			n->index =  i;
-			cout << "AddtoProjlist: " << n->name << " " << n->index << endl;
+//			cout << "AddtoProjlist: " << n->name << " " << n->index << endl;
 			projectList.push_back(n);
 		}
 	}
@@ -128,10 +128,10 @@ void Database::addToProjectList( vector<string> atts ) {
 
 
 bool Database::inProjectList( string name, int index ) {
-	cout << "Checking if it's in project list\n";
+//	cout << "Checking if it's in project list\n";
 	for (int i = 0; i < projectList.size(); i++) {
 		if (projectList[i]->name == name) {
-			cout << "inprojlist: " << name << endl;
+//			cout << "inprojlist: " << name << endl;
 			selectList.push(i);
 			selectList.push(index);
 			return true;
@@ -142,7 +142,7 @@ bool Database::inProjectList( string name, int index ) {
 
 relation* Database::conformToHead( PredicateClass* head, relation* &rel ) {
 	projectList.clear();
-	cout << "conform: " << rel->attsToString();
+//	cout << "conform: " << rel->attsToString();
 	vector<ParameterClass*> params = head->paramsOut();
 	for (int i = 0; i < params.size(); i++) {
 		myNode* n = new myNode();
