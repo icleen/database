@@ -119,6 +119,7 @@ string Database::relationsOut() {
 relation* Database::queryFind(relation *relat, PredicateClass *query) {
 //	cout << relationsOut();
 	projectList.clear();
+	renameOutput = "";
     relation* tempRel = copyRelation(relat);
 //    cout << "Here?\n";
     vector<ParameterClass*> params = query->paramsOut();

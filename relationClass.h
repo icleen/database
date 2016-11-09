@@ -30,6 +30,8 @@ private:
     bool setFunction( vector< vector<string> > a, vector<string> b);
     string stringTuple( vector<string> t);
 
+    bool isUnique( vector<string> t );
+
 public:
     relation(string nme) : name(nme) {  };
     

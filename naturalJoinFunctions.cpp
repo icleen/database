@@ -7,31 +7,26 @@
 //
 
 void Database::convertRules( vector<RuleClass*> rules ) {
+	cout << "ConvertRules\n";
+	int relationSize = 0;
+	do {
+		relationSize = facts();
+		for (int i = 0; i < rules.size(); i++) {
+			relation* r = ruler( rules[i] );
+			if (r != NULL) {
+				int index = relationIndex( r->nameOut() );
+				relations[index]->addTuples( r->tuplesOut() );
+			}
+		}
 
-	for (int i = 0; i < rules.size(); i++) {
-//		cout << "convert: " << i << endl;
-//		cout << "relations.size: " << relations.size() << endl;
-		relation* r = ruler( rules[i] );
-		int index = relationIndex( r->nameOut() );
-		relations[index]->addTuples( r->tuplesOut() );
+	}while ( relationSize != facts() );
 
-//		cout << r->nameOut() << endl;
-//		relations.push_back( r );
-//		vector< vector<string> > tuples = r->tuplesOut();
-//		for (int i = 0; i < tuples.size(); i++) {
-//			for (int j = 0; j < tuples[i].size(); j++) {
-//				cout << tuples[i][j] << " ";
-//			}
-//			cout << endl;
-//		}
-	}
 	projectList.clear();
 	renameOutput = "";
-//	cout << "relations.size: " << relations.size() << endl;
 }
 
 relation* Database::ruler( RuleClass* rule ) {
-
+	cout << "Ruler\n";
 	PredicateClass* head = rule->headOut();
 	vector< PredicateClass* > preds = rule->predicatesOut();
 	vector< relation* > tempRels;
@@ -41,7 +36,6 @@ relation* Database::ruler( RuleClass* rule ) {
 	    int index = relationIndex( name );
 	    if ( index >= 0 ) {
 	    	relation* a = queryFind( relations[index],  preds[i] );
-//	    	cout << "\nAttributes: "<< a->attribute_at(0) << a->attribute_at(1) << endl;
 	    	tempRels.push_back(a);
 	    }else {
 	    	return NULL;
@@ -56,19 +50,12 @@ relation* Database::ruler( RuleClass* rule ) {
 		temp = naturalJoin( tempRels.at(0), tempRels.at(j) );
 	}
 	temp = conformToHead( head, temp );
-//	vector< vector<string> > tuples = temp->tuplesOut();
-//	cout << endl;
-//	for (int i = 0; i < tuples.size(); i++) {
-//		for (int j = 0; j < tuples[i].size(); j++) {
-//			cout << tuples[i][j] << " ";
-//		}
-//		cout << endl;
-//	}
 	return temp;
 }
 
 
 relation* Database::naturalJoin( relation* a, relation* b ) {
+	cout << "naturalJoin\n";
 	projectList.clear();
 	totalAtts = 0;
 	relation* tempRel = joinAll( a, b );
@@ -81,30 +68,12 @@ relation* Database::naturalJoin( relation* a, relation* b ) {
 		selectList.pop();
 		tempRel = selector( tempRel, pop1, pop2 );
 	}
-//	vector< vector<string> > tuples = tempRel->tuplesOut();
-//	cout << endl;
-//	for (int i = 0; i < tuples.size(); i++) {
-//		for (int j = 0; j < tuples[i].size(); j++) {
-//			cout << tuples[i][j] << " ";
-//		}
-//		cout << endl;
-//	}
-//	tempRel = projector( tempRel );
-//	tuples.clear();
-//	tuples = tempRel->tuplesOut();
-//	cout << endl;
-//	for (int i = 0; i < tuples.size(); i++) {
-//		for (int j = 0; j < tuples[i].size(); j++) {
-//			cout << tuples[i][j] << " ";
-//		}
-//		cout << endl;
-//	}
 	return tempRel;
 }
 
 
 relation* Database::joinAll( relation* a, relation* b ) {
-//	cout << "join all\n";
+	cout << "join all\n";
 	vector< vector<string> > Atuples = a->tuplesOut();
 	vector< vector<string> > Btuples = b->tuplesOut();
 	vector< vector<string> > tuples;
@@ -127,7 +96,7 @@ relation* Database::joinAll( relation* a, relation* b ) {
 
 
 void Database::addToProjectList( vector<string> atts ) {
-//	cout << "Adding to project list\n";
+	cout << "Adding to project list\n";
 	int i;
 	for (i = 0; i < atts.size(); i++) {
 		if ( !inProjectList( atts[i], i ) ) {
@@ -144,7 +113,7 @@ void Database::addToProjectList( vector<string> atts ) {
 
 
 bool Database::inProjectList( string name, int index ) {
-//	cout << "Checking if it's in project list\n";
+	cout << "Checking if it's in project list\n";
 	for (int i = 0; i < projectList.size(); i++) {
 		if (projectList[i]->name == name) {
 //			cout << "inprojlist: " << name << endl;
@@ -158,7 +127,7 @@ bool Database::inProjectList( string name, int index ) {
 
 relation* Database::conformToHead( PredicateClass* head, relation* &rel ) {
 	projectList.clear();
-//	cout << "conform: " << rel->attsToString();
+	cout << "conform: " << rel->attsToString();
 	vector<ParameterClass*> params = head->paramsOut();
 	for (int i = 0; i < params.size(); i++) {
 		myNode* n = new myNode();
@@ -187,6 +156,13 @@ void Database::reorder( relation* &rel ) {
 
 }
 
+int Database::facts() {
+	int amount = 0;
+	for (int i = 0; i < relations.size(); i++) {
+		amount += relations[i]->size();
+	}
+	return amount;
+}
 
 
 
