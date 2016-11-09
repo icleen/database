@@ -50,9 +50,20 @@ void relation::addTuple(vector<string> tple) {
 void relation::addTuples(vector< vector<string> > tples) {
 
 	for (int i = 0; i < tples.size(); i++) {
-		tuples.push_back(tples[i]);
+		if  (isUnique( tples.at(i) ) ) {
+			tuples.push_back(tples[i]);
+		}
 	}
 
+}
+
+bool relation::isUnique( vector<string> t ) {
+	for (int i = 0; i < tuples.size(); i++) {
+		if ( t == tuples.at(i) ) {
+			return false;
+		}
+	}
+	return true;
 }
 
 //
@@ -81,18 +92,6 @@ void relation::sortTuples() {
 		 }
 	}
 }
-
-//// swaps the temporary variables
-//string temp = tempTuples[j];
-//tempTuples[j] = tempTuples[t];
-//tempTuples[t] = temp;
-//
-//// swaps the actual tuples
-//vector<string> vtemp = tuples[j];
-//tuples[j] = tuples[t];
-//tuples[t] = temp;
-
-
 
 string relation::stringTuple( vector<string> t) {
 	stringstream ss;
@@ -156,13 +155,11 @@ vector< vector<string> > relation::project(vector<int> indexi) {
 }
 
 bool relation::setFunction( vector< vector<string> > a, vector<string> b) {
-
 	for (int i = 0; i < a.size(); i++) {
 		if ( a[i] == b ) {
 			return false;
 		}
 	}
-
 	return true;
 }
 

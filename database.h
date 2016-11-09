@@ -67,6 +67,8 @@ private:
 
     string relationsOut();
 
+    int facts();
+
 public:
     Database(datalogClass* data) : datalog(data) {
         makeRelations();
