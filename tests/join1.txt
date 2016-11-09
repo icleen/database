@@ -1,0 +1,11 @@
+Schemes:
+  SK(A,B)
+  BOB(C,D)
+Facts:
+  SK('a','b').
+  SK('b','c').
+Rules:
+  BOB(X,Z) :- SK(X,C), SK(C,Z).
+Queries:
+  BOB('a','c')?
+  

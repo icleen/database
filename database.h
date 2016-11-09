@@ -44,7 +44,7 @@ private:
     relation* queryFind(relation* relat, PredicateClass* query);
     relation* selector(relation* r, int a, int b);
     relation* selector(relation* r, int a, string b);
-    relation* projector(relation* r);
+    relation* projector(relation* &r);
     void renamer(relation* &rel);
     vector<myNode*> projectList;
     
@@ -55,15 +55,13 @@ private:
     // Lab 4 functions:
     void convertRules( vector<RuleClass*> rules );
     relation* ruler( RuleClass* rule );
-    relation* ruler2( RuleClass* rule );
-
     relation* naturalJoin( relation* a, relation* b );
     relation* joinAll( relation* a, relation* b );
-    relation* someCommon( relation* a, relation* b );
-    relation* allCommon( relation* a, relation* b );
     void addToProjectList( vector<string> s );
     bool inProjectList( string name, int index );
-    void mergeTuples( vector< vector<string> > &a, const vector< vector<string> > &b, int a1, int b1);
+    relation* conformToHead( PredicateClass* head, relation* &r );
+    void reorder( relation* &rel );
+    int nameLocation( string s, relation* r );
     int totalAtts;
     queue<int> selectList;
 

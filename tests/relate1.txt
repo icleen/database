@@ -7,7 +7,7 @@ Facts:
   SK('b','b').
   SK('c','b').
 Rules:
-  BOB(Z,X) :- SK(X,Z). SK(Z,X).
+  BOB(Z,X) :- SK(X,Z), SK(Z,X).
 Queries:
   SK(A,'c')?
   SK('b','c')?

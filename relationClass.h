@@ -59,6 +59,19 @@ public:
     	return attributes.size();
     }
     
+    string attsToString() {
+    	stringstream ss;
+    	for (int i = 0; i < attributes.size(); i++) {
+    		ss << attributes[i] << " ";
+    	}
+    	ss << "\n";
+    	return ss.str();
+    }
+
+    void changeName( string s ) {
+    	name = s;
+    }
+
     vector< vector<string> > select(int attr, string value);
     vector< vector<string> > select(int attr, int attr2);
     vector< vector<string> > project(vector<int> indexi);

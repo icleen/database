@@ -132,7 +132,7 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
             }
         }
     }
-    tempRel = projector(tempRel);
+    tempRel = projector( tempRel );
 //    cout << "Renamer prob\n";
     renamer( tempRel );
 //    cout << "Not\n";
@@ -156,7 +156,7 @@ relation* Database::selector(relation* r, int a, string b) {
 }
 
 // returns the new relation based on the projections listed in the projectList
-relation* Database::projector(relation* rel) {
+relation* Database::projector(relation* &rel) {
 	rel->sortTuples();
 	if ( projectList.empty() ) {
 		return rel;
@@ -184,10 +184,8 @@ void Database::renamer(relation* &rel) {
 		out << "  ";
 		for ( int j = 0; j < projectList.size(); j++ ) {
 			string s = projectList[j]->name;
-//			cout << "Rename function?\n";
-			rel->rename( i, s );
-//			cout << "Not?\n";
-			out << rel->attribute_at(i) << "=" << rel->tuple_at( i, j);
+			rel->rename( j, s );
+			out << rel->attribute_at(j) << "=" << rel->tuple_at( i, j);
 			if ( j < projectList.size() - 1 ) {
 				out << ", ";
 			}

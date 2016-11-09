@@ -32,7 +32,10 @@ private:
     void findType();
         
 public:
-	ParameterClass() { };
+	ParameterClass() {
+		name = "";
+		type = VAR;
+	};
 	ParameterClass(string input) : name (input) {
             findType();
         };
