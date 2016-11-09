@@ -12,6 +12,7 @@
 #include <sstream>
 #include <iostream>
 #include <algorithm>
+#include <assert.h>
 
 #include "datalogProgram.h"
 #include "relationClass.h"
@@ -69,6 +70,7 @@ private:
 public:
     Database(datalogClass* data) : datalog(data) {
         makeRelations();
+        convertRules( datalog->rulesOut() );
     };
     
     string interpretStart();

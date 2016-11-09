@@ -202,69 +202,6 @@ void Database::renamer(relation* &rel) {
 
 
 
-//
-//	Making New Relations from the Rules
-//
-
-void Database::convertRules( vector<RuleClass*> rules ) {
-
-//	while (  ) // while the relations.size() is not the same as last time we called this function
-
-	for (int i = 0; i < rules.size(); i++) {
-		ruler( rules[i] );
-	}
-
-}
-
-relation* Database::ruler( RuleClass* rule ) {
-
-	PredicateClass* head = rule->headOut();
-	vector< PredicateClass* > preds = rule->predicatesOut();
-	vector< relation* > tempRels;
-
-	for (int i = 0; i < preds.size(); i++) {
-		string name = preds[i]->nameOut();
-	    int index = relationIndex( name );
-	    if ( index >= 0 ) {
-	    	relation* a = queryFind( relations[index],  preds[i] );
-	    	tempRels.push_back(a);
-	    }else {
-	    	return NULL;
-	    }
-	}
-	if ( tempRels.empty() ) {
-		return NULL;
-	}
-	relation* rel = tempRels[0];
-	for (int j = 1; j < tempRels.size(); j++) {
-		rel = naturalJoin( tempRels.at(0), tempRels.at(j) );
-	}
-
-	return rel;
-}
-
-void Database::mergeTuples( vector< vector<string> > &a, const vector< vector<string> > &b, int a1, int b1) {
-	for (int i = 0; i < a.size(); i++) {
-		for (int j = 0; j < b.size(); j++) {
-			if ( a[i][a1] == b[j][b1] ) {
-				for (int k = 0; k < b[j].size(); k++) {
-					if (k != b1) {
-						a[i].push_back(b[j][k]);
-					}
-				}
-			}
-		}
-	}
-}
-
-void mergeVectors( vector<string> &a, vector<string> b ) {
-	for (int i = 0; i < b.size(); i++) {
-		a.push_back(b[i]);
-	}
-}
-
-
-
 
 
 

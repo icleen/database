@@ -7,11 +7,11 @@ relation* Database::naturalJoin( relation* a, relation* b ) {
 	addToProjectList( tempRel->attributesOut() );
 
 	for (int i = 0; i < selectList.size(); i += 2) {
-		int a = selectList.front();
+		int pop1 = selectList.front();
 		selectList.pop();
-		int b = selectList.front();
+		int pop2 = selectList.front();
 		selectList.pop();
-		tempRel = selector( tempRel, a, b );
+		tempRel = selector( tempRel, pop1, pop2 );
 	}
 	tempRel = projector( tempRel );
 
@@ -67,3 +67,62 @@ bool Database::inProjectList( string name, int index ) {
 	}
 	return false;
 }
+
+
+//
+//	Making New Relations from the Rules
+//
+
+void Database::convertRules( vector<RuleClass*> rules ) {
+
+	for (int i = 0; i < rules.size(); i++) {
+		cout << "convert: " << i << endl;
+		relations.push_back( ruler( rules[i] ) );
+	}
+
+}
+
+relation* Database::ruler( RuleClass* rule ) {
+
+	PredicateClass* head = rule->headOut();
+	vector< PredicateClass* > preds = rule->predicatesOut();
+	vector< relation* > tempRels;
+
+	for (int i = 0; i < preds.size(); i++) {
+		string name = preds[i]->nameOut();
+	    int index = relationIndex( name );
+	    if ( index >= 0 ) {
+	    	relation* a = queryFind( relations[index],  preds[i] );
+	    	tempRels.push_back(a);
+	    }else {
+	    	return NULL;
+	    }
+	}
+	assert( tempRels.size() == preds.size() );
+	if ( tempRels.empty() ) {
+		return NULL;
+	}
+	relation* temp;
+	for (int j = 1; j < tempRels.size(); j++) {
+		temp = naturalJoin( tempRels.at(0), tempRels.at(j) );
+	}
+
+	return queryFind( temp, head );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
