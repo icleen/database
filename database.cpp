@@ -189,27 +189,32 @@ void Database::renamer(relation* &rel) {
 	if ( projectList.size() == 0) {
 		return;
 	}
-	stringstream out;
-	out <<"\n";
-	for (int i = 0; i < rel->size(); i++) {
-		out << "  ";
-		for ( int j = 0; j < projectList.size(); j++ ) {
-			string s = projectList[j]->name;
-			rel->rename( j, s );
-			out << rel->attribute_at(j) << "=" << rel->tuple_at( i, j);
-			if ( j < projectList.size() - 1 ) {
-				out << ", ";
-			}
-		}
-		if ( i < rel->size() - 1 ) {
-			out << "\n";
-		}
-	}
-	cout << "renamed: " << rel->attsToString() << endl;
-	renameOutput = out.str();
+    for ( int j = 0; j < projectList.size(); j++ ) {
+        string s = projectList[j]->name;
+        rel->rename( j, s );
+    }
+    cout << "renamed: " << rel->attsToString() << endl;
+	
+	renameOutputFunc(rel, projectList.size());
 }
 
-
+void Database::renameOutputFunc(relation* rel, int b) {
+    stringstream out;
+    out <<"\n";
+    for (int i = 0; i < rel->size(); i++) {
+        out << "  ";
+        for ( int j = 0; j < b; j++ ) {
+            out << rel->attribute_at(j) << "=" << rel->tuple_at( i, j);
+            if ( j < projectList.size() - 1 ) {
+                out << ", ";
+            }
+        }
+        if ( i < rel->size() - 1 ) {
+            out << "\n";
+        }
+    }
+    renameOutput = out.str();
+}
 
 
 

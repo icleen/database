@@ -7,11 +7,7 @@
 //
 
 void Database::convertRules( vector<RuleClass*> rules ) {
-<<<<<<< HEAD
-//	cout << "ConvertRules\n";
-=======
 	cout << "ConvertRules\n";
->>>>>>> edit
 	int relationSize = 0;
 	do {
 		relationSize = facts();
@@ -30,11 +26,7 @@ void Database::convertRules( vector<RuleClass*> rules ) {
 }
 
 relation* Database::ruler( RuleClass* rule ) {
-<<<<<<< HEAD
-	cout << "Ruler: ";
-=======
 	cout << "Ruler\n";
->>>>>>> edit
 	PredicateClass* head = rule->headOut();
 	cout << head->nameOut() << " ";
 	vector< PredicateClass* > preds = rule->predicatesOut();
@@ -57,18 +49,13 @@ relation* Database::ruler( RuleClass* rule ) {
 	}
 	relation* temp = tempRels.at(0);
 	if (tempRels.size() == 1) {
-
+        temp = conformToHead(head, temp);
 	}else {
 		for (int j = 1; j < tempRels.size(); j++) {
 			temp = naturalJoin( temp, tempRels.at(j) );
 		}
 		temp = conformToHead( head, temp );
 	}
-<<<<<<< HEAD
-
-=======
-	temp = conformToHead( head, temp );
->>>>>>> edit
 	return temp;
 }
 

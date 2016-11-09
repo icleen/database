@@ -66,7 +66,7 @@ private:
     queue<int> selectList;
 
     string relationsOut();
-
+    void renameOutputFunc(relation* rel, int b);
     int facts();
 
 public:
