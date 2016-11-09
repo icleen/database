@@ -6,7 +6,7 @@
 //	Making New Relations from the Rules
 //
 
-void Database::convertRules( vector<RuleClass*> rules ) {
+void Database::convertRules( const vector<RuleClass*> &rules ) {
 //	cout << "ConvertRules\n";
 	int relationSize = 0;
 	do {
@@ -60,7 +60,7 @@ relation* Database::ruler( RuleClass* rule ) {
 }
 
 
-relation* Database::naturalJoin( relation* a, relation* b ) {
+relation* Database::naturalJoin( relation* &a, relation* &b ) {
 //	cout << "naturalJoin\n";
 	projectList.clear();
 	totalAtts = 0;
@@ -78,39 +78,33 @@ relation* Database::naturalJoin( relation* a, relation* b ) {
 }
 
 
-relation* Database::joinAll( relation* a, relation* b ) {
+relation* Database::joinAll( relation* &a, relation* &b ) {
 //	cout << "join all\n";
-	vector< vector<string> > Atuples = a->tuplesOut();
-	vector< vector<string> > Btuples = b->tuplesOut();
-	vector< vector<string> > tuples;
+	relation* rel = new relation( a->nameOut() );
+	rel->addTuples( joinedTuples( a->tuplesOut(), b->tuplesOut() ) );
+	rel->addAttributes( a->attributesOut() );
+	rel->addAttributes( b->attributesOut() );
+	return rel;
+}
 
+vector< vector<string> > Database::joinedTuples( vector< vector<string> > Atuples, vector< vector<string> > Btuples ) {
+	vector< vector<string> > tuples;
+	vector<string> tempTuple;
 	for (int i = 0; i < Atuples.size(); i++) {
 		for (int j = 0; j < Btuples.size(); j++) {
-			vector<string> tempTuple = Atuples[i];
+			tempTuple = Atuples[i];
 			for (int k = 0; k < Btuples[j].size(); k++) {
 				tempTuple.push_back( Btuples[j][k] );
 			}
 			tuples.push_back( tempTuple );
+			tempTuple.clear();
 		}
 	}
-	relation* rel = new relation( a->nameOut() );
-	rel->addTuples( tuples );
-	rel->addAttributes( a->attributesOut() );
-	rel->addAttributes( b->attributesOut() );
-	//	vector< vector<string> > tuples = tempRel->tuplesOut();
-	//	cout << endl;
-	//	for (int i = 0; i < tuples.size(); i++) {
-	//		for (int j = 0; j < tuples[i].size(); j++) {
-	//			cout << tuples[i][j] << " ";
-	//		}
-	//		cout << endl;
-	//	}
-	//	tempRel = projector( tempRel );
-	return rel;
+	return tuples;
 }
 
 
-void Database::addToProjectList( vector<string> atts ) {
+void Database::addToProjectList( const vector<string> &atts ) {
 //	cout << "Adding to project list\n";
 	int i;
 	for (i = 0; i < atts.size(); i++) {
@@ -127,7 +121,7 @@ void Database::addToProjectList( vector<string> atts ) {
 }
 
 
-bool Database::inProjectList( string name, int index ) {
+bool Database::inProjectList( const string &name, const int &index ) {
 //	cout << "Checking if it's in project list\n";
 	for (int i = 0; i < projectList.size(); i++) {
 		if (projectList[i]->name == name) {
@@ -140,7 +134,7 @@ bool Database::inProjectList( string name, int index ) {
 	return false;
 }
 
-relation* Database::conformToHead( PredicateClass* head, relation* &rel ) {
+relation* Database::conformToHead( PredicateClass* &head,  relation* &rel ) {
 	projectList.clear();
 //	cout << "conform: " << rel->attsToString();
 	vector<ParameterClass*> params = head->paramsOut();
@@ -157,7 +151,7 @@ relation* Database::conformToHead( PredicateClass* head, relation* &rel ) {
 	return rel;
 }
 
-int Database::nameLocation( string s, relation* r ) {
+int Database::nameLocation( const string &s,  relation* &r ) {
 	for (int i = 0; i < r->attSize(); i++) {
 		if (r->attribute_at(i) == s) {
 			return i;

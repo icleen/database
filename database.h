@@ -53,15 +53,16 @@ private:
     int repeatVar(string var);
     
     // Lab 4 functions:
-    void convertRules( vector<RuleClass*> rules );
+    void convertRules( const vector<RuleClass*> &rules );
     relation* ruler( RuleClass* rule );
-    relation* naturalJoin( relation* a, relation* b );
-    relation* joinAll( relation* a, relation* b );
-    void addToProjectList( vector<string> s );
-    bool inProjectList( string name, int index );
-    relation* conformToHead( PredicateClass* head, relation* &r );
+    relation* naturalJoin( relation* &a, relation* &b );
+    relation* joinAll( relation* &a, relation* &b );
+    vector< vector<string> > joinedTuples( vector< vector<string> > Atuples, vector< vector<string> > Btuples );
+    void addToProjectList( const vector<string> &s );
+    bool inProjectList( const string &name, const int &index );
+    relation* conformToHead( PredicateClass* &head, relation* &r );
     void reorder( relation* &rel );
-    int nameLocation( string s, relation* r );
+    int nameLocation( const string &s, relation* &r );
     int totalAtts;
     queue<int> selectList;
 

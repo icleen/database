@@ -21,7 +21,7 @@ void Database::makeTuples() {
     for (int i = 0; i < facts.size(); i++) {
         int index = relationIndex(facts[i]->nameOut());
         if (index == -1) {
-            cout << "Fact matches no known relations\n";
+//            cout << "Fact matches no known relations\n";
             return;
         }
         relations[index]->addTuple(makeTuple(facts[i]->paramsOut()));
@@ -193,7 +193,7 @@ void Database::renamer(relation* &rel) {
         string s = projectList[j]->name;
         rel->rename( j, s );
     }
-    cout << "renamed: " << rel->attsToString() << endl;
+//    cout << "renamed: " << rel->attsToString() << endl;
 	
 	renameOutputFunc(rel, projectList.size());
 }
