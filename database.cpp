@@ -205,7 +205,7 @@ void Database::renamer(relation* &rel) {
 			out << "\n";
 		}
 	}
-
+	cout << "renamed: " << rel->attsToString() << endl;
 	renameOutput = out.str();
 }
 
