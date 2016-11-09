@@ -1,12 +1,13 @@
 Schemes:
   SK(A,B)
+  BOB(C,D)
 Facts:
   SK('a','c').
   SK('b','c').
   SK('b','b').
   SK('b','c').
 Rules:
-  DoNothing(Z) :- Stuff(Z).
+  BOB(Z,X) :- SK(X,Z). SK(Z,X).
 Queries:
   SK(A,'c')?
   SK('b','c')?

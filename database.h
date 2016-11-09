@@ -61,7 +61,9 @@ private:
     relation* someCommon( relation* a, relation* b );
     relation* allCommon( relation* a, relation* b );
     void addToProjectList( vector<string> s );
-    bool inProjectList( string name );
+    bool inProjectList( string name, int index );
+    int totalAtts;
+    queue<int> selectList;
 
 public:
     Database(datalogClass* data) : datalog(data) {

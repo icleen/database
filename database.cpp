@@ -164,10 +164,12 @@ relation* Database::projector(relation* rel) {
 	relation* tempRel = new relation( rel->nameOut() );
 	vector<int> indexi;
 	for (int i = 0; i < projectList.size(); i++) {
-		indexi.push_back( projectList[i]->index );
+		int index = projectList[i]->index;
+		indexi.push_back( index );
+		tempRel->addAttribute( rel->attribute_at( index ) );
 	}
 	tempRel->addTuples( rel->project( indexi ) );
-	tempRel->addAttributes( rel->attributesOut() );
+//	tempRel->addAttributes( rel->attributesOut() );
 	return tempRel;
 }
 
@@ -241,13 +243,25 @@ relation* Database::ruler( RuleClass* rule ) {
 	return rel;
 }
 
+
 relation* Database::naturalJoin( relation* a, relation* b ) {
 	projectList.clear();
+	totalAtts = 0;
 	relation* tempRel = joinAll( a, b );
-	addToProjectList( a->attributesOut() );
+	addToProjectList( tempRel->attributesOut() );
+
+	for (int i = 0; i < selectList.size(); i += 2) {
+		int a = selectList.front();
+		selectList.pop();
+		int b = selectList.front();
+		selectList.pop();
+		tempRel = selector( tempRel, a, b );
+	}
+	tempRel = projector( tempRel );
 
 	return tempRel;
 }
+
 
 relation* Database::joinAll(relation* a, relation* b) {
 	cout << "no common\n";
@@ -274,24 +288,28 @@ relation* Database::joinAll(relation* a, relation* b) {
 
 
 void Database::addToProjectList( vector<string> atts ) {
-
-	for (int i = 0; i < atts.size(); i++) {
-		if ( !inProjectList( atts[i] ) ) {
+	int i;
+	for (i = 0; i < atts.size(); i++) {
+		if ( !inProjectList( atts[i], i ) ) {
 			myNode* n = new myNode();
 			n->name = atts[i];
-			n->index = i;
+			n->index =  i;
 			projectList.push_back(n);
 		}
 	}
+	totalAtts += i + 1;
 
 }
 
-bool Database::inProjectList( string name ) {
+bool Database::inProjectList( string name, int index ) {
 	for (int i = 0; i < projectList.size(); i++) {
 		if (projectList[i]->name == name) {
+			selectList.push(i);
+			selectList.push(index);
 			return true;
 		}
 	}
+	return false;
 }
 
 
