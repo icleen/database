@@ -65,6 +65,8 @@ private:
     int totalAtts;
     queue<int> selectList;
 
+    string relationsOut();
+
 public:
     Database(datalogClass* data) : datalog(data) {
         makeRelations();

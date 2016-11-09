@@ -4,8 +4,11 @@ Schemes:
 Facts:
   SK('a','b').
   SK('b','c').
+  BOB('a','b').
 Rules:
   BOB(X,Z) :- SK(X,C), SK(C,Z).
 Queries:
   BOB('a','c')?
+  SK('a','b')?
+  SK('b','c')?
   

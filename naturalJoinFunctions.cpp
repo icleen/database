@@ -9,19 +9,25 @@
 void Database::convertRules( vector<RuleClass*> rules ) {
 
 	for (int i = 0; i < rules.size(); i++) {
-		cout << "convert: " << i << endl;
+//		cout << "convert: " << i << endl;
+//		cout << "relations.size: " << relations.size() << endl;
 		relation* r = ruler( rules[i] );
-		cout << r->nameOut() << endl;
-		relations.push_back( r );
-		vector< vector<string> > tuples = r->tuplesOut();
-		for (int i = 0; i < tuples.size(); i++) {
-			for (int j = 0; j < tuples[i].size(); j++) {
-				cout << tuples[i][j] << " ";
-			}
-			cout << endl;
-		}
-	}
+		int index = relationIndex( r->nameOut() );
+		relations[index]->addTuples( r->tuplesOut() );
 
+//		cout << r->nameOut() << endl;
+//		relations.push_back( r );
+//		vector< vector<string> > tuples = r->tuplesOut();
+//		for (int i = 0; i < tuples.size(); i++) {
+//			for (int j = 0; j < tuples[i].size(); j++) {
+//				cout << tuples[i][j] << " ";
+//			}
+//			cout << endl;
+//		}
+	}
+	projectList.clear();
+	renameOutput = "";
+//	cout << "relations.size: " << relations.size() << endl;
 }
 
 relation* Database::ruler( RuleClass* rule ) {
@@ -161,7 +167,6 @@ relation* Database::conformToHead( PredicateClass* head, relation* &rel ) {
 		projectList.push_back(n);
 	}
 	rel = projector( rel );
-	reorder( rel );
 	rel->changeName( head->nameOut() );
 	return rel;
 }

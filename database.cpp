@@ -78,7 +78,7 @@ int Database::repeatVar(string var) {
 
 string Database::interpretStart() {
 	stringstream out;
-
+//	cout << "relations.size: " << relations.size() << endl;
     vector<class PredicateClass*> queries = datalog->queriesOut();
     vector<relation*> tempRelations;
     relation* tempRel;
@@ -105,9 +105,19 @@ string Database::interpretStart() {
     return out.str();
 }
 
+string Database::relationsOut() {
+	stringstream out;
+	for (int i = 0; i < relations.size(); i++) {
+		out << relations[i]->nameOut() << " " << relations[i]->attribute_at(0) << " ";
+	}
+	out << endl;
+	return out.str();
+}
+
 
 // return a new relation based on the given relation and the data in the given query
 relation* Database::queryFind(relation *relat, PredicateClass *query) {
+//	cout << relationsOut();
 	projectList.clear();
     relation* tempRel = copyRelation(relat);
 //    cout << "Here?\n";
