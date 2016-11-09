@@ -7,7 +7,11 @@
 //
 
 void Database::convertRules( vector<RuleClass*> rules ) {
+<<<<<<< HEAD
 //	cout << "ConvertRules\n";
+=======
+	cout << "ConvertRules\n";
+>>>>>>> edit
 	int relationSize = 0;
 	do {
 		relationSize = facts();
@@ -26,7 +30,11 @@ void Database::convertRules( vector<RuleClass*> rules ) {
 }
 
 relation* Database::ruler( RuleClass* rule ) {
+<<<<<<< HEAD
 	cout << "Ruler: ";
+=======
+	cout << "Ruler\n";
+>>>>>>> edit
 	PredicateClass* head = rule->headOut();
 	cout << head->nameOut() << " ";
 	vector< PredicateClass* > preds = rule->predicatesOut();
@@ -56,7 +64,11 @@ relation* Database::ruler( RuleClass* rule ) {
 		}
 		temp = conformToHead( head, temp );
 	}
+<<<<<<< HEAD
 
+=======
+	temp = conformToHead( head, temp );
+>>>>>>> edit
 	return temp;
 }
 
@@ -129,7 +141,7 @@ void Database::addToProjectList( vector<string> atts ) {
 
 
 bool Database::inProjectList( string name, int index ) {
-//	cout << "Checking if it's in project list\n";
+	cout << "Checking if it's in project list\n";
 	for (int i = 0; i < projectList.size(); i++) {
 		if (projectList[i]->name == name) {
 			cout << "inprojlist: " << name << endl;
