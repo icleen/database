@@ -171,3 +171,5 @@ void relation::rename( int attrIndex, string attrName) {
 	}
     attributes[attrIndex] = attrName;
 }
+
+

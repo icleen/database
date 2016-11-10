@@ -9,6 +9,7 @@
 void Database::convertRules( const vector<RuleClass*> &rules ) {
 //	cout << "ConvertRules\n";
 	int relationSize = 0;
+	int times = 0;
 	do {
 		relationSize = facts();
 		for (int i = 0; i < rules.size(); i++) {
@@ -17,10 +18,11 @@ void Database::convertRules( const vector<RuleClass*> &rules ) {
 				int index = relationIndex( r->nameOut() );
 				relations[index]->addTuples( r->tuplesOut() );
 			}
+			delete r;
 		}
-
+		times++;
 	}while ( relationSize != facts() );
-
+	cout << "Schemes populated after " << times << " passes through the Rules.\n";
 	projectList.clear();
 	renameOutput = "";
 }

@@ -70,11 +70,16 @@ private:
     void renameOutputFunc(relation* rel, int b);
     int facts();
 
+    void clear();
+
 public:
     Database(datalogClass* data) : datalog(data) {
         makeRelations();
         convertRules( datalog->rulesOut() );
     };
+    ~Database() {
+    	clear();
+    }
     
     string interpretStart();
 
