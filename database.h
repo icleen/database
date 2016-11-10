@@ -70,8 +70,8 @@ private:
     void renameOutputFunc(relation* rel, int b);
     int facts();
 
-    void clear();
     void cleanProjList();
+    void clear();
 
 public:
     Database(datalogClass* data) : datalog(data) {

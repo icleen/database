@@ -101,7 +101,6 @@ string Database::interpretStart() {
     	}
     	out << "\n";
     	delete tempRel;
-    	tempRel = NULL;
     }
 
     return out.str();
@@ -136,6 +135,7 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
             if (repeatIndex != -1) {
             	//deal with a repeated variable
             	selector( tempRel, i, projectList[repeatIndex]->index );
+
             }else {
             	// add to the project list for later projection and renaming
             	myNode* data = new myNode();
@@ -189,6 +189,7 @@ void Database::projector(relation* &rel) {
 	rel = tempRel;
 }
 
+
 // returns a string with the relation info in it
 void Database::renamer(relation* &rel) {
 	if ( projectList.size() == 0) {
@@ -219,6 +220,12 @@ void Database::renameOutputFunc(relation* rel, int b) {
         }
     }
     renameOutput = out.str();
+}
+
+void Database::clear() {
+	for (int i = 0; i < relations.size(); i++) {
+		delete relations[i];
+	}
 }
 
 

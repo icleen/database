@@ -150,6 +150,7 @@ bool Database::inProjectList( const string &name, const int &index ) {
 	return false;
 }
 
+
 relation* Database::conformToHead( PredicateClass* &head,  relation* &rel ) {
 	cleanProjList();
 //	cout << "conform: " << rel->attsToString();
