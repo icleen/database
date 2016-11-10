@@ -127,13 +127,13 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
 //    	cout << "(" << i + 1 << ") Working...\n";
         if (params[i]->typeOut() == "DOM") {
         	// select on the value
-        	tempRel = selector( tempRel, i, params[i]->toString() );
+        	selector( tempRel, i, params[i]->toString() );
         }else {
         	// decide whether the VAR is already in the project list
             int  repeatIndex = repeatVar( params[i]->toString() );
             if (repeatIndex != -1) {
             	//deal with a repeated variable
-                tempRel = selector( tempRel, i, projectList[repeatIndex]->index );
+                selector( tempRel, i, projectList[repeatIndex]->index );
             }else {
             	// add to the project list for later projection and renaming
             	myNode* data = new myNode();
@@ -143,7 +143,7 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
             }
         }
     }
-    tempRel = projector( tempRel );
+    projector( tempRel );
 //    cout << "Renamer prob\n";
     renamer( tempRel );
 //    cout << "Not\n";
@@ -151,26 +151,28 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
 }
 
 // returns the new relation based off of the select function
-relation* Database::selector(relation* r, int a, int b) {
+void Database::selector(relation* &r, int a, int b) {
 	 relation* tempRel = new relation( r->nameOut() );
 	tempRel->addTuples( r->select( a, b ) );
 	tempRel->addAttributes( r->attributesOut() );
-	return tempRel;
+	delete r;
+	r = tempRel;
 }
 
 // returns the new relation based off of the select function
-relation* Database::selector(relation* r, int a, string b) {
+void Database::selector(relation* &r, int a, string b) {
 	relation* tempRel = new relation( r->nameOut() );
 	tempRel->addTuples( r->select( a, b ) );
 	tempRel->addAttributes( r->attributesOut() );
-	return tempRel;
+	delete r;
+	r = tempRel;
 }
 
 // returns the new relation based on the projections listed in the projectList
-relation* Database::projector(relation* &rel) {
+void Database::projector(relation* &rel) {
 	rel->sortTuples();
 	if ( projectList.empty() ) {
-		return rel;
+		return;
 	}
 	relation* tempRel = new relation( rel->nameOut() );
 	vector<int> indexi;
@@ -181,8 +183,10 @@ relation* Database::projector(relation* &rel) {
 	}
 	tempRel->addTuples( rel->project( indexi ) );
 //	tempRel->addAttributes( rel->attributesOut() );
-	return tempRel;
+	delete rel;
+	rel = tempRel;
 }
+
 
 // returns a string with the relation info in it
 void Database::renamer(relation* &rel) {

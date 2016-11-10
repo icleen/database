@@ -72,7 +72,7 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 		selectList.pop();
 		int pop2 = selectList.front();
 		selectList.pop();
-		tempRel = selector( tempRel, pop1, pop2 );
+		selector( tempRel, pop1, pop2 );
 	}
 	return tempRel;
 }
@@ -147,7 +147,7 @@ relation* Database::conformToHead( PredicateClass* &head,  relation* &rel ) {
 		n->index = num;
 		projectList.push_back(n);
 	}
-	rel = projector( rel );
+	projector( rel );
 	rel->changeName( head->nameOut() );
 	return rel;
 }

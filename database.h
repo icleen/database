@@ -42,9 +42,9 @@ private:
     // interpretation functions:
     
     relation* queryFind(relation* relat, PredicateClass* query);
-    relation* selector(relation* r, int a, int b);
-    relation* selector(relation* r, int a, string b);
-    relation* projector(relation* &r);
+    void selector(relation* &r, int a, int b);
+    void selector(relation* &r, int a, string b);
+    void projector(relation* &r);
     void renamer(relation* &rel);
     vector<myNode*> projectList;
     
