@@ -134,6 +134,7 @@ bool Database::inProjectList( const string &name, const int &index ) {
 	return false;
 }
 
+
 relation* Database::conformToHead( PredicateClass* &head,  relation* &rel ) {
 	projectList.clear();
 //	cout << "conform: " << rel->attsToString();
