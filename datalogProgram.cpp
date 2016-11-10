@@ -165,4 +165,52 @@ vector<string> datalogClass::schemeNames() {
     return names;
 }
 
+void PredicateClass::clear() {
+	int i = params.size() - 1;
+	while(!params.empty()) {
+		delete params[i];
+		params.pop_back();
+		i--;
+	}
+}
+
+void RuleClass::clear() {
+	for (int i = 0; i < preds.size(); i++) {
+		delete preds[i];
+	}
+}
+
+void datalogClass::clear() {
+	eraseSchemes();
+	eraseFacts();
+	eraseRules();
+	eraseQueries();
+}
+
+void datalogClass::eraseSchemes() {
+	int i = schemes.size() - 1;
+		while(!schemes.empty()) {
+			delete schemes[i];
+			schemes.pop_back();
+			i--;
+		}
+}
+void datalogClass::eraseFacts() {
+	int i = facts.size() - 1;
+	while(!facts.empty()) {
+		delete facts[i];
+		facts.pop_back();
+		i--;
+	}
+}
+void datalogClass::eraseRules() {
+	for (int i = 0; i < rules.size(); i++) {
+		delete rules[i];
+	}
+}
+void datalogClass::eraseQueries() {
+	for (int i = 0; i < queries.size(); i++) {
+		delete queries[i];
+	}
+}
   

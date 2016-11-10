@@ -56,9 +56,12 @@ class PredicateClass {
 private:
 	string name;
 	vector<ParameterClass*> params;
-
+	void clear();
 public:
 	PredicateClass(string nme) : name(nme) { };
+	~PredicateClass() {
+		clear();
+	}
 	void changeName(string newName) { name = newName; };
 	void add(ParameterClass* p) { params.push_back(p); };
     
@@ -79,6 +82,7 @@ private:
 //	string name;
 	class PredicateClass* headPredicate;
 	vector<class PredicateClass*> preds;
+	void clear();
 
 public:
 	RuleClass(class PredicateClass* head = NULL) : headPredicate(head) { };
@@ -113,7 +117,17 @@ private:
     string queryData();
     string domainData();
 	
+    void clear();
+    void eraseSchemes();
+    void eraseFacts();
+    void eraseRules();
+    void eraseQueries();
+
 public:
+
+    ~datalogClass() {
+    	clear();
+    }
 
 	void addSchemes(vector<class PredicateClass*> &s);
 	void addFacts(vector<class PredicateClass*> &f);

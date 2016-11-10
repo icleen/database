@@ -249,30 +249,34 @@ bool parse::rule(queue<token> &tokens) {
     token t = tokens.front();
     if (t == ID) {
         class PredicateClass* p = headPredicate(tokens);
-	bool check = checkCOLON_DASH(tokens);
-	if (p == NULL || !check) {
-	  return false;
-	}
-	//cout << "found head\n";
-	class RuleClass* r = new class RuleClass(p);
+        bool check = checkCOLON_DASH(tokens);
+        if (p == NULL || !check) {
+        	delete p;
+        	return false;
+        }
+//        cout << "found head\n";
+		class RuleClass* r = new class RuleClass(p);
 	
-	vector<class PredicateClass*> ps;
-	p = predicate(tokens);
+		vector<class PredicateClass*> ps;
+		p = predicate(tokens);
         ps = predicatelist(tokens);
-	if (p == NULL ) {
-	  return false;
-	}if ( ps.size() == 1 && ps[0] == NULL ) {
-	  return false;
-	}
+        if (p == NULL ) {
+        	delete r;
+        	return false;
+        }if ( ps.size() == 1 && ps[0] == NULL ) {
+        	delete r;
+        	delete p;
+        	return false;
+        }
         
         r->addPred(p);
-	for (int i = 0; i < ps.size(); i++) {
-	  r->addPred(ps[i]);
-	}
+        for (int i = 0; i < ps.size(); i++) {
+        	r->addPred(ps[i]);
+        }
 	
-	rules.push_back(r);
-        check = checkPERIOD(tokens);   
-        return check;
+        rules.push_back(r);
+       	check = checkPERIOD(tokens);
+       	return check;
     }
     offender = t;
     return false;
@@ -293,14 +297,14 @@ bool parse::query(queue<token> &tokens) {
     token t = tokens.front();
     if (t == ID) {
       
-	class PredicateClass* p = predicate(tokens);
-        bool check = checkQ_MARK(tokens);
-	if (!check || p == NULL) {
-	  return false;
-	}
-	queries.push_back(p);
-	return true;
-	
+    	class PredicateClass* p = predicate(tokens);
+    	bool check = checkQ_MARK(tokens);
+    	if (!check || p == NULL) {
+    		delete p;
+    		return false;
+    	}
+    	queries.push_back(p);
+    	return true;
     }
     offender = t;
     return false;
@@ -318,20 +322,18 @@ void parse::addToPred(class PredicateClass* &p, vector<class ParameterClass*> &p
 class PredicateClass* parse::headPredicate(queue<token> &tokens) {
     token t = tokens.front();
     if (t == ID) {
-      
       int num = 0;
       int size = 0;
       bool check = (checkID(tokens, num) && checkLEFT_P(tokens) && checkID(tokens, size)
                 && idlist(tokens, size) && checkRIGHT_P(tokens));
       if (!check) {
-	return NULL;
+    	  return NULL;
       }
       class PredicateClass* p = new class PredicateClass(tokenStrings.front());
       tokenStrings.pop();
       addToPred(p, size, false);
       //cout << "worked\n";
       return p;
-      
     }
     offender = t;
     return NULL;

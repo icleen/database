@@ -8,6 +8,7 @@ CPP_SRCS += \
 ../database.cpp \
 ../datalogProgram.cpp \
 ../main.cpp \
+../naturalJoinFunctions.cpp \
 ../otherAutomata.cpp \
 ../parseClass.cpp \
 ../readingClass.cpp \
@@ -18,6 +19,7 @@ OBJS += \
 ./database.o \
 ./datalogProgram.o \
 ./main.o \
+./naturalJoinFunctions.o \
 ./otherAutomata.o \
 ./parseClass.o \
 ./readingClass.o \
@@ -28,6 +30,7 @@ CPP_DEPS += \
 ./database.d \
 ./datalogProgram.d \
 ./main.d \
+./naturalJoinFunctions.d \
 ./otherAutomata.d \
 ./parseClass.d \
 ./readingClass.d \

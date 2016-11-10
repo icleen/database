@@ -23,7 +23,7 @@ void Database::convertRules( const vector<RuleClass*> &rules ) {
 		times++;
 	}while ( relationSize != facts() );
 	cout << "Schemes populated after " << times << " passes through the Rules.\n";
-	projectList.clear();
+	cleanProjList();
 	renameOutput = "";
 }
 
@@ -50,13 +50,23 @@ relation* Database::ruler( RuleClass* rule ) {
 		return NULL;
 	}
 	relation* temp = tempRels.at(0);
+	relation* temp2 = NULL;
 	if (tempRels.size() == 1) {
-        temp = conformToHead(head, temp);
+        temp2 = conformToHead(head, temp);
+        delete temp;
+        temp = temp2;
+        temp2 = NULL;
 	}else {
 		for (int j = 1; j < tempRels.size(); j++) {
-			temp = naturalJoin( temp, tempRels.at(j) );
+			temp2 = naturalJoin( temp, tempRels.at(j) );
+			delete temp;
+			temp = temp2;
+			temp2 = NULL;
 		}
-		temp = conformToHead( head, temp );
+		temp2 = conformToHead( head, temp );
+		delete temp;
+		temp = temp2;
+		temp2 = NULL;
 	}
 	return temp;
 }
@@ -64,7 +74,7 @@ relation* Database::ruler( RuleClass* rule ) {
 
 relation* Database::naturalJoin( relation* &a, relation* &b ) {
 //	cout << "naturalJoin\n";
-	projectList.clear();
+	cleanProjList();
 	totalAtts = 0;
 	relation* tempRel = joinAll( a, b );
 	addToProjectList( tempRel->attributesOut() );
@@ -74,7 +84,7 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 		selectList.pop();
 		int pop2 = selectList.front();
 		selectList.pop();
-		tempRel = selector( tempRel, pop1, pop2 );
+		selector( tempRel, pop1, pop2 );
 	}
 	return tempRel;
 }
@@ -83,13 +93,8 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 relation* Database::joinAll( relation* &a, relation* &b ) {
 //	cout << "join all\n";
 	relation* rel = new relation( a->nameOut() );
-	rel->addTuples( joinedTuples( a->tuplesOut(), b->tuplesOut() ) );
-	rel->addAttributes( a->attributesOut() );
-	rel->addAttributes( b->attributesOut() );
-	return rel;
-}
-
-vector< vector<string> > Database::joinedTuples( vector< vector<string> > Atuples, vector< vector<string> > Btuples ) {
+	vector< vector<string> > Atuples = a->tuplesOut();
+	vector< vector<string> > Btuples = b->tuplesOut();
 	vector< vector<string> > tuples;
 	vector<string> tempTuple;
 	for (int i = 0; i < Atuples.size(); i++) {
@@ -102,7 +107,10 @@ vector< vector<string> > Database::joinedTuples( vector< vector<string> > Atuple
 			tempTuple.clear();
 		}
 	}
-	return tuples;
+	rel->addTuples( joinedTuples( Atuples, Btuples ) );
+	rel->addAttributes( a->attributesOut() );
+	rel->addAttributes( b->attributesOut() );
+	return rel;
 }
 
 
@@ -137,7 +145,7 @@ bool Database::inProjectList( const string &name, const int &index ) {
 }
 
 relation* Database::conformToHead( PredicateClass* &head,  relation* &rel ) {
-	projectList.clear();
+	cleanProjList();
 //	cout << "conform: " << rel->attsToString();
 	vector<ParameterClass*> params = head->paramsOut();
 	for (int i = 0; i < params.size(); i++) {
@@ -148,7 +156,7 @@ relation* Database::conformToHead( PredicateClass* &head,  relation* &rel ) {
 		n->index = num;
 		projectList.push_back(n);
 	}
-	rel = projector( rel );
+	projector( rel );
 	rel->changeName( head->nameOut() );
 	return rel;
 }
