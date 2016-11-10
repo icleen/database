@@ -118,7 +118,7 @@ string Database::relationsOut() {
 // return a new relation based on the given relation and the data in the given query
 relation* Database::queryFind(relation *relat, PredicateClass *query) {
 //	cout << relationsOut();
-	projectList.clear();
+	cleanProjList();
 	renameOutput = "";
     relation* tempRel = copyRelation(relat);
 //    cout << "Here?\n";
@@ -220,7 +220,18 @@ void Database::renameOutputFunc(relation* rel, int b) {
     renameOutput = out.str();
 }
 
+void Database::clear() {
+	for (int i = 0; i < relations.size(); i++) {
+		delete relations[i];
+	}
+}
 
+void Database::cleanProjList() {
+	for (int i = 0; i < projectList.size(); i++) {
+		delete projectList[i];
+	}
+	projectList.clear();
+}
 
 
 

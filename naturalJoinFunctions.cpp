@@ -23,8 +23,7 @@ void Database::convertRules( const vector<RuleClass*> &rules ) {
 		times++;
 	}while ( relationSize != facts() );
 	cout << "Schemes populated after " << times << " passes through the Rules.\n";
-//	cleanProjList();
-	projectList.clear();
+	cleanProjList();
 	renameOutput = "";
 }
 
@@ -65,7 +64,7 @@ relation* Database::ruler( RuleClass* rule ) {
 
 relation* Database::naturalJoin( relation* &a, relation* &b ) {
 //	cout << "naturalJoin\n";
-	projectList.clear();
+	cleanProjList();
 	totalAtts = 0;
 	relation* tempRel = joinAll( a, b );
 	addToProjectList( tempRel->attributesOut() );
@@ -139,7 +138,7 @@ bool Database::inProjectList( const string &name, const int &index ) {
 
 
 relation* Database::conformToHead( PredicateClass* &head,  relation* &rel ) {
-	projectList.clear();
+	cleanProjList();
 //	cout << "conform: " << rel->attsToString();
 	vector<ParameterClass*> params = head->paramsOut();
 	for (int i = 0; i < params.size(); i++) {
