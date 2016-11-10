@@ -68,6 +68,10 @@ relation* Database::ruler( RuleClass* rule ) {
 		temp = temp2;
 		temp2 = NULL;
 	}
+	for (int j = 0; j < tempRels.size(); j++) {
+		delete tempRels[j];
+	}
+	tempRels.clear();
 	return temp;
 }
 
@@ -93,8 +97,13 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 relation* Database::joinAll( relation* &a, relation* &b ) {
 //	cout << "join all\n";
 	relation* rel = new relation( a->nameOut() );
-	vector< vector<string> > Atuples = a->tuplesOut();
-	vector< vector<string> > Btuples = b->tuplesOut();
+	rel->addTuples( joinedTuples( a->tuplesOut(), b->tuplesOut() ) );
+	rel->addAttributes( a->attributesOut() );
+	rel->addAttributes( b->attributesOut() );
+	return rel;
+}
+
+vector< vector<string> > Database::joinedTuples( vector< vector<string> > Atuples, vector< vector<string> > Btuples ) {
 	vector< vector<string> > tuples;
 	vector<string> tempTuple;
 	for (int i = 0; i < Atuples.size(); i++) {
@@ -107,10 +116,7 @@ relation* Database::joinAll( relation* &a, relation* &b ) {
 			tempTuple.clear();
 		}
 	}
-	rel->addTuples( joinedTuples( Atuples, Btuples ) );
-	rel->addAttributes( a->attributesOut() );
-	rel->addAttributes( b->attributesOut() );
-	return rel;
+	return tuples;
 }
 
 

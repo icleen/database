@@ -100,6 +100,8 @@ string Database::interpretStart() {
         	}
     	}
     	out << "\n";
+    	delete tempRel;
+    	tempRel = NULL;
     }
 
     return out.str();
