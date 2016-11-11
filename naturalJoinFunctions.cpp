@@ -58,6 +58,9 @@ relation* Database::ruler( RuleClass* rule ) {
 		}
 		temp = conformToHead( head, temp );
 	}
+	for (int i = 0; i < tempRels.size(); i++) {
+		delete tempRels[i];
+	}
 	return temp;
 }
 
