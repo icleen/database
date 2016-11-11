@@ -186,7 +186,7 @@ int main(int argc, char *argv[]) {
         cout << database->interpretStart();
     }
     
-    
+    delete database;
     //delete parser;
     detoxAutomata(myAutomata);
 //    cout << "okay?\n";
