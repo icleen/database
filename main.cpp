@@ -187,7 +187,8 @@ int main(int argc, char *argv[]) {
     }
     
     delete database;
-    //delete parser;
+    delete datalog;
+    delete parser;
     detoxAutomata(myAutomata);
 //    cout << "okay?\n";
 //	while (!tokens.empty()) {

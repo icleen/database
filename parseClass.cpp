@@ -154,9 +154,9 @@ void parse::addToPred(class PredicateClass* &p, int size, bool fact) {
   for (int i = 0; i < size; i++) {
 		string s = tokenStrings.front();
 		tokenStrings.pop();
-                class ParameterClass* param = new class ParameterClass(s);
-		p->add(param);
-                if (fact == true) {
+        class ParameterClass* param = new class ParameterClass(s);
+        p->add(param);
+        if (fact == true) {
 			domain.push_back(s);
 		}
 		//cout << s << ", ";
@@ -679,31 +679,23 @@ bool parse::checkMEOF(queue<token> &tokens) {
 
 
 void parse::eraseSchemes() {
-	int i = 0;
-	while (!schemes.empty()) {
-		delete schemes[i];
-		schemes[i++] = NULL;
+	for (int i = 0; i < schemes.size(); i++) {
+		delete schemes.at(i);
 	}
 }
 void parse::eraseFacts() {
-	int i = 0;
-	while (!facts.empty()) {
-		delete facts[i];
-		facts[i++] = NULL;
+	for (int i = 0; i < facts.size(); i++) {
+		delete facts.at(i);
 	}
 }
 void parse::eraseRules() {
-	int i = 0;
-	while (!rules.empty()) {
-		delete rules[i];
-		rules[i++] = NULL;
+	for (int i = 0; i < rules.size(); i++) {
+		delete rules.at(i);
 	}
 }
 void parse::eraseQueries() {
-	int i = 0;
-	while (!queries.empty()) {
-	  delete queries[i];
-	  queries[i++] = NULL;
+	for (int i = 0; i < queries.size(); i++) {
+		delete queries.at(i);
 	}
 }
 
