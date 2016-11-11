@@ -42,9 +42,9 @@ private:
     // interpretation functions:
     
     relation* queryFind(relation* relat, PredicateClass* query);
-    void selector(relation* &r, int a, int b);
-    void selector(relation* &r, int a, string b);
-    void projector(relation* &r);
+    relation* selector(relation* r, int a, int b);
+    relation* selector(relation* r, int a, string b);
+    relation* projector(relation* &r);
     void renamer(relation* &rel);
     vector<myNode*> projectList;
     
@@ -53,40 +53,25 @@ private:
     int repeatVar(string var);
     
     // Lab 4 functions:
-    void convertRules( const vector<RuleClass*> &rules );
+    void convertRules( vector<RuleClass*> rules );
     relation* ruler( RuleClass* rule );
-    relation* naturalJoin( relation* &a, relation* &b );
-    relation* joinAll( relation* &a, relation* &b );
-    vector< vector<string> > joinedTuples( vector< vector<string> > Atuples, vector< vector<string> > Btuples );
-    void addToProjectList( const vector<string> &s );
-    bool inProjectList( const string &name, const int &index );
-    relation* conformToHead( PredicateClass* &head, relation* &r );
+    relation* naturalJoin( relation* a, relation* b );
+    relation* joinAll( relation* a, relation* b );
+    void addToProjectList( vector<string> s );
+    bool inProjectList( string name, int index );
+    relation* conformToHead( PredicateClass* head, relation* &r );
     void reorder( relation* &rel );
-    int nameLocation( const string &s, relation* &r );
+    int nameLocation( string s, relation* r );
     int totalAtts;
     queue<int> selectList;
 
     string relationsOut();
-    void renameOutputFunc(relation* rel, int b);
-    int facts();
-
-    void cleanProjList();
-    void clear();
-
-    vector<vector<string>> mergeList;
-    void mergeTuples( vector<vector<string>> &a );
-    void mergeTuple( vector<string> &a, vector<string> &b);
 
 public:
     Database(datalogClass* data) : datalog(data) {
         makeRelations();
-//        cout << "Converting Rules\n";
         convertRules( datalog->rulesOut() );
-//        cout << "Converted Rules\n";
     };
-    ~Database() {
-    	clear();
-    }
     
     string interpretStart();
 

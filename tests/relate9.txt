@@ -1,6 +1,7 @@
 Schemes:
     A(A,B,C)
     B(A,B,C,D)
+    C(A,B)
     D(A,B)
     
 Facts:

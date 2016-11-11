@@ -9,9 +9,9 @@ Facts:
     B('','','',''). B('','','','').
     
 Rules:
-    C(X,Y) :- A(X,Y,Z)
-    C(X,Y) :- A(X,R,Q), B(Y,R,Q,Z)
-    C(X,Y) :- D(Y,X)
+    C(X,Y) :- A(X,Y,Z).
+    C(X,Y) :- A(X,R,Q), B(Y,R,Q,Z).
+    C(X,Y) :- D(Y,X).
     
 Queries:
     A(X,Z,Y)?

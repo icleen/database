@@ -2,6 +2,7 @@ Schemes:
     D(apricot,melon)
     A(A,B,C)
     B(A,B,C,D)
+    C(A,B)
     
 Facts:
     D('melon','melon'). D('apricot','melon'). D('apricot','apricot'). 

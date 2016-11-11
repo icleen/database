@@ -17,7 +17,7 @@ Rules:
 A(a,b,c,d,e) :- A(e,d,c,b,a).
 A(a,b,c,f,g) :- A(a,b,c,d,e),A(e,d,c,f,g).
 A(a,b,c,d,e) :- A(b,c,d,e,a).
-A(a,b,c,d,e) :- A(b,a,c,d,e).
+#A(a,b,c,d,e) :- A(b,a,c,d,e).
 
 
 

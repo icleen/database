@@ -9,14 +9,6 @@
 //#include "parseClass.h"
 
 
-const int TEST_NUM = 19;
-const string TESTS[] = {
-		"./tests/join1.txt", "./tests/join2.txt", "./tests/join3.txt", "./tests/join4.txt", "./tests/join5.txt", "./tests/join6.txt", "./tests/relate1.txt",
-		"./tests/relate2.txt", "./tests/relate3.txt", "./tests/relate4.txt", "./tests/relate5.txt","./tests/relate6.txt", "./tests/relate7.txt",
-		"./tests/relate8.txt", "./tests/relate9.txt", "./tests/relate10.txt", "./tests/relate11.txt", "./tests/relate12.txt", "./tests/relate0.txt"
-};
-
-
 //----------------------------------------------
 // Clean Up
 //----------------------------------------------
@@ -162,11 +154,16 @@ class Database* createDatabase(class datalogClass* datalog) {
 }
 //----------------------------------------------
 
-void program( string file ) {
+// Main Program
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        cout << "Not correct argument, end\n";
+        return 1;
+    }
 	reader myReader;
-	bool check = myReader.readIn( file );
+	bool check = myReader.readIn(argv[1]);
 	if (!check) {
-	  return;
+	  return 1;
 	}
 	vector<BaseAutomata*> myAutomata;
 	initiateAutomata(myAutomata);
@@ -189,24 +186,14 @@ void program( string file ) {
         cout << database->interpretStart();
     }
     
-    delete database;
-    delete datalog;
-    delete parser;
+    
+    //delete parser;
     detoxAutomata(myAutomata);
-}
-
-
-// Main Program
-int main(int argc, char *argv[]) {
-//    if (argc != 2) {
-//        cout << "Not correct argument, end\n";
-//        return 1;
-//    }
-
-	for (int i = 0; i < TEST_NUM; i++) {
-		cout << "\nTest number " << i + 1 << "\n\n";
-		program( TESTS[i] );
-	}
+//    cout << "okay?\n";
+//	while (!tokens.empty()) {
+//		cout << tokens.front();
+//		tokens.pop();
+//	}
 
 	return 0;
 }
