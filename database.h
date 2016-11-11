@@ -73,6 +73,10 @@ private:
     void cleanProjList();
     void clear();
 
+    vector<vector<string>> mergeList;
+    void mergeTuples( vector<vector<string>> &a );
+    void mergeTuple( vector<string> &a, vector<string> &b);
+
 public:
     Database(datalogClass* data) : datalog(data) {
         makeRelations();

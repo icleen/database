@@ -58,7 +58,7 @@ relation* Database::ruler( RuleClass* rule ) {
 		}
 		temp = conformToHead( head, temp );
 	}
-	for (int i = 0; i < tempRels.size(); i++) {
+	for (int i = 1; i < tempRels.size(); i++) {
 		delete tempRels[i];
 	}
 	return temp;
@@ -105,6 +105,7 @@ vector< vector<string> > Database::joinedTuples( vector< vector<string> > Atuple
 			tempTuple.clear();
 		}
 	}
+	mergeTuples( Atuples );
 	return tuples;
 }
 
@@ -181,6 +182,16 @@ int Database::facts() {
 	return amount;
 }
 
+void Database::mergeTuples( vector<vector<string>> &a ) {
+
+	for (int i = 0; i < a.size(); i++) {
+
+	}
+
+}
+void Database::mergeTuple( vector<string> &a, vector<string> &b) {
+
+}
 
 
 
