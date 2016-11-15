@@ -7,15 +7,25 @@ Schemes:
     
 Facts:
     D('melon','melon'). D('apricot','melon'). D('apricot','apricot'). 
+    D('verbose','melon'). D('dragon fruit','apple'). D('apple','apricot').
     A('1','1','1'). A('1','2','3'). A('1','2','1'). A('1','1','3'). 
     B('1','1','1','1'). B('1','2','1','2'). B('2','1','1','2'). B('2','1','2','1').
     
 Rules:
+    D(X,Y):-D(Y,X).
     C(X,Y) :- A(X,Y,Z).
     C(X,Y) :- A(X,R,Q), B(Y,R,Q,Z).
     C(X,Y) :- D(Y,X).
     E(Z,Y,X,W,V,U,T,S) :- D(Z,Y),A(X,W,V),C(U,T),D(S,Z).
     E(Z,Y,X,W,V,U,T,S) :- D(V,S),A(T,U,V),C(X,W),D(Y,Z).
+    E(Z,Y,X,W,V,U,T,S) :- D(Y,Z),A(V,X,W),C(T,U),D(Z,S).
+    E(Z,Y,X,W,V,U,T,S) :- D(Y,Z),A(V,X,W),C(T,U),D(Z,S).
+    E(Z,Y,X,W,V,U,T,S) :- B(Z,Y,X,W),B(S,T,U,V).
+    E(Z,Y,X,W,V,U,T,S) :- B(Z,Y,X,W),B(S,T,U,V),B(W,Y,X,Z).
+    E(Z,Y,X,W,V,U,T,S) :- B(Z,Y,S,V),B(V,W,U,S),B(T,X,Y,S).
+    E(Z,Y,X,W,V,U,T,S) :- B(Z,Y,S,V),B(D,X,Z,A),B(U,T,B,C),B(A,B,C,D),B(W,D,C,S).
+    #E(Z,Y,X,W,V,U,T,S) :- B(Z,Y,X,W),A(Z,B,V),A(A,B,W),A(B,Y,X),D(U,T,S).
+    
 Queries:
     E(Z,Y,X,W,V,U,T,S)?
     

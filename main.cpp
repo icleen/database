@@ -188,9 +188,12 @@ void program( string file ) {
         database = createDatabase(datalog);
         string s = database->interpretStart();
         if (s != "") {
-        	cout << s;
+//        	cout << s;
 //        	cout << "Success!\n";
-
+        	ofstream outFile;
+        	outFile.open( "testOutput" );
+        	outFile << s;
+        	outFile.close();
         }
     }
     
