@@ -3,6 +3,7 @@ Schemes:
     A(A,B,C)
     B(A,B,C,D)
     C(A,B)
+    E(A,B,C,D,E,F,G,H)
     
 Facts:
     D('melon','melon'). D('apricot','melon'). D('apricot','apricot'). 
@@ -13,8 +14,10 @@ Rules:
     C(X,Y) :- A(X,Y,Z).
     C(X,Y) :- A(X,R,Q), B(Y,R,Q,Z).
     C(X,Y) :- D(Y,X).
-    
+    E(Z,Y,X,W,V,U,T,S) :- D(Z,Y),A(X,W,V),C(U,T),D(S,Z).
+    E(Z,Y,X,W,V,U,T,S) :- D(V,S),A(T,U,V),C(X,W),D(Y,Z).
 Queries:
-    D('apricot','melon')?
-    D(a,a)?
-    D(a,b)?
+    E(Z,Y,X,W,V,U,T,S)?
+    
+#|
+Test for all the relations we can make with eight parameters in a predicate

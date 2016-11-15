@@ -13,3 +13,6 @@ Queries:
   SK('b','c')?
   SK(X,X)?
   SK(A,B)? 
+
+#|
+Tests to see how the program will take '' (empty) string sets

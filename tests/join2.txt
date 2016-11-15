@@ -15,3 +15,6 @@ Rules:
 R(I,J) :- R(I,Z),E(Z,J).
 Queries:
 R('1','4')?
+
+#|
+Also a test to see if you can make all possible transitive connections

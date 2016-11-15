@@ -18,3 +18,6 @@ Queries:
     B('1',X,'1',X)?
     B(x,z,x,z)?
     A(x,y,x)?
+
+#|
+Tests to see how the program will take '' (empty) string sets

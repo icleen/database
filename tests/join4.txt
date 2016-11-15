@@ -14,3 +14,6 @@ Queries:
     snap(S,N,A,P)?
     NameHasID('Snoopy',Id)?
     NameHasID(Name,'67890')?
+    
+    #|
+Tests the to make sure you can go from multiple parameters in preds on the right to fewer in the head predicate

@@ -21,15 +21,7 @@ A('9','10').
 
 Rules:
 
-Symmetric(X,Y) :- A(X,Y).
-Symmetric(X,Y) :- Symmetric(Y,X).
 
-rA(a,b) :- A(b,a).
-
-Reflexive(X,Y) :- A(X,Z),rA(Z,Y).
-
-Transitive(X,Y) :- A(X,Y).
-Transitive(X,Z) :- Transitive(X,Y),Transitive(Y,Z).
 SymTran(X,Y) :- SymTran(Y,X).
 SymTran(X,Z) :- SymTran(X,Y),SymTran(Y,Z).
 SymTran(X,Y) :- A(Y,X).
@@ -45,3 +37,5 @@ Transitive('1',P)?
 A('1','2')?
 Symmetric('2','1')?
 SymTran(X,Y)?
+#|
+More basic version of join6 to help debug the time problem

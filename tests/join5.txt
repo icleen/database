@@ -19,3 +19,6 @@ Queries:
    f(A,B)?
    g(A,B)?
    r(A,B)?
+   
+   #|
+Tests to see how many tuples can be made in each relation

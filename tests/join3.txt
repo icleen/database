@@ -26,3 +26,6 @@ Queries:
    DeaWoo(A,B,'a',D,Applestrudle)?
    DeaWoo(A,B,'a',D,E)?
    DeaWoo('a','a','a','a','b')?
+   
+#|
+tests to make sure you can have more than 2-3 parameters in each of the rule predicates

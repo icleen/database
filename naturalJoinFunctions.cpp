@@ -22,7 +22,7 @@ void Database::convertRules( const vector<RuleClass*> &rules ) {
 		}
 		times++;
 	}while ( relationSize != facts() );
-	cout << "Schemes populated after " << times << " passes through the Rules.\n";
+//	cout << "Schemes populated after " << times << " passes through the Rules.\n";
 	cleanProjList();
 	renameOutput = "";
 }

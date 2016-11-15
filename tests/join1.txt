@@ -12,3 +12,5 @@ Queries:
   SK('a','b')?
   SK('b','c')?
   
+#|
+Tests the basic transitivity function
