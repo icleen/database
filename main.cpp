@@ -204,11 +204,18 @@ void program( string file ) {
 // Main Program
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        cout << "Not correct argument, end\n";
-        return 1;
+//        cout << "Not correct argument, end\n";
+    	cout << "Automatic Testing:\n";
+    	for (int i = 0; i < TEST_NUM; i++) {
+    		cout << "\nTest number " << i + 1 << "\n";
+    		program( TESTS[i] );
+    		cout << "Success!\n";
+    	}
+    }else {
+    	program( argv[1] );
     }
 
-    program( argv[1] );
+
 
 //	for (int i = 0; i < TEST_NUM; i++) {
 //		cout << "\nTest number " << i + 1 << "\n";

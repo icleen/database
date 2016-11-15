@@ -37,8 +37,8 @@ public:
 		type = VAR;
 	};
 	ParameterClass(string input) : name (input) {
-            findType();
-        };
+		findType();
+    };
 	void defineParam(string input) { name = input; };
 	string toString() { return name; };
     string typeOut() {
@@ -59,6 +59,11 @@ private:
 
 public:
 	PredicateClass(string nme) : name(nme) { };
+	~PredicateClass() {
+		for (int i = 0; i < params.size(); i++) {
+			delete params[i];
+		}
+	}
 	void changeName(string newName) { name = newName; };
 	void add(ParameterClass* p) { params.push_back(p); };
     
@@ -82,6 +87,12 @@ private:
 
 public:
 	RuleClass(class PredicateClass* head = NULL) : headPredicate(head) { };
+	~RuleClass() {
+		delete headPredicate;
+		for (int i = 0; i < preds.size(); i++) {
+			delete preds[i];
+		}
+	}
 //	bool changeName(string nme) { name = nme; };
 	bool addHeadPred(class PredicateClass* head);
 	bool addPred(class PredicateClass* ps);
