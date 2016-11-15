@@ -171,3 +171,34 @@ void relation::rename( int attrIndex, string attrName) {
 	}
     attributes[attrIndex] = attrName;
 }
+
+
+void relation::joinRelation( relation* rel ) {
+
+	vector< vector<string> > newTuples;
+	vector< vector<string> > other = rel->tuplesOut();
+	vector<string> tempTuple;
+	for (int i = 0; i < tuples.size(); i++) {
+		for (int j = 0; j < other.size(); j++) {
+			tempTuple = tuples[i];
+			for (int k = 0; k < other[j].size(); k++) {
+				tempTuple.push_back( other[j][k] );
+			}
+			newTuples.push_back( tempTuple );
+			tempTuple.clear();
+		}
+	}
+	tuples.clear();
+	tuples = newTuples;
+	addAttributes( rel->attributesOut() );
+
+}
+
+
+
+
+
+
+
+
+

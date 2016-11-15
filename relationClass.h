@@ -79,6 +79,8 @@ public:
     vector< vector<string> > project(vector<int> indexi);
     void rename( int attrIndex, string attrName);
     void sortTuples();
+
+    void joinRelation(relation* rel);
 };
 
 

@@ -22,7 +22,7 @@ void Database::convertRules( const vector<RuleClass*> &rules ) {
 		}
 		times++;
 	}while ( relationSize != facts() );
-//	cout << "Schemes populated after " << times << " passes through the Rules.\n";
+	cout << "Schemes populated after " << times << " passes through the Rules.\n";
 	cleanProjList();
 	renameOutput = "";
 }
@@ -69,27 +69,29 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 //	cout << "naturalJoin\n";
 	cleanProjList();
 	totalAtts = 0;
-	relation* tempRel = joinAll( a, b );
-	addToProjectList( tempRel->attributesOut() );
+//	relation* tempRel = joinAll( a, b );
+	a->joinRelation( b );
+	addToProjectList( a->attributesOut() );
 
 	for (int i = 0; i < selectList.size(); i += 2) {
 		int pop1 = selectList.front();
 		selectList.pop();
 		int pop2 = selectList.front();
 		selectList.pop();
-		selector( tempRel, pop1, pop2 );
+		selector( a, pop1, pop2 );
 	}
-	return tempRel;
+	return a;
 }
 
 
 relation* Database::joinAll( relation* &a, relation* &b ) {
 //	cout << "join all\n";
-	relation* rel = new relation( a->nameOut() );
-	rel->addTuples( joinedTuples( a->tuplesOut(), b->tuplesOut() ) );
-	rel->addAttributes( a->attributesOut() );
-	rel->addAttributes( b->attributesOut() );
-	return rel;
+//	relation* rel = new relation( a->nameOut() );
+//	rel->addTuples( joinedTuples( a->tuplesOut(), b->tuplesOut() ) );
+//	rel->addAttributes( a->attributesOut() );
+//	rel->addAttributes( b->attributesOut() );
+	a->joinRelation( b );
+	return a;
 }
 
 vector< vector<string> > Database::joinedTuples( vector< vector<string> > Atuples, vector< vector<string> > Btuples ) {
