@@ -67,6 +67,7 @@ private:
     int facts();
 
     void cleanProjList();
+    void cleanSelList();
     void clear();
 
 public:

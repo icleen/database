@@ -218,6 +218,12 @@ void Database::cleanProjList() {
 	projectList.clear();
 }
 
+void Database::cleanSelList() {
+	while(!selectList.empty()) {
+		selectList.pop();
+	}
+}
+
 
 
 

@@ -68,11 +68,12 @@ relation* Database::ruler( RuleClass* rule ) {
 relation* Database::naturalJoin( relation* &a, relation* &b ) {
 //	cout << "naturalJoin\n";
 	cleanProjList();
+	cleanSelList();
 	totalAtts = 0;
 	a->joinRelation( b );
 	addToProjectList( a->attributesOut() );
 
-	for (int i = 0; i < selectList.size(); i += 2) {
+	while( !selectList.empty() ) {
 		int pop1 = selectList.front();
 		selectList.pop();
 		int pop2 = selectList.front();
