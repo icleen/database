@@ -56,8 +56,6 @@ private:
     void convertRules( const vector<RuleClass*> &rules );
     relation* ruler( RuleClass* rule );
     relation* naturalJoin( relation* &a, relation* &b );
-    relation* joinAll( relation* &a, relation* &b );
-    vector< vector<string> > joinedTuples( vector< vector<string> > Atuples, vector< vector<string> > Btuples );
     void addToProjectList( const vector<string> &s );
     bool inProjectList( const string &name, const int &index );
     relation* conformToHead( PredicateClass* &head, relation* &r );
@@ -72,10 +70,6 @@ private:
 
     void cleanProjList();
     void clear();
-
-    vector<vector<string>> mergeList;
-    void mergeTuples( vector<vector<string>> &a );
-    void mergeTuple( vector<string> &a, vector<string> &b);
 
 public:
     Database(datalogClass* data) : datalog(data) {

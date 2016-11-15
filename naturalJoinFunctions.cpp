@@ -69,7 +69,6 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 //	cout << "naturalJoin\n";
 	cleanProjList();
 	totalAtts = 0;
-//	relation* tempRel = joinAll( a, b );
 	a->joinRelation( b );
 	addToProjectList( a->attributesOut() );
 
@@ -81,34 +80,6 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 		selector( a, pop1, pop2 );
 	}
 	return a;
-}
-
-
-relation* Database::joinAll( relation* &a, relation* &b ) {
-//	cout << "join all\n";
-//	relation* rel = new relation( a->nameOut() );
-//	rel->addTuples( joinedTuples( a->tuplesOut(), b->tuplesOut() ) );
-//	rel->addAttributes( a->attributesOut() );
-//	rel->addAttributes( b->attributesOut() );
-	a->joinRelation( b );
-	return a;
-}
-
-vector< vector<string> > Database::joinedTuples( vector< vector<string> > Atuples, vector< vector<string> > Btuples ) {
-	vector< vector<string> > tuples;
-	vector<string> tempTuple;
-	for (int i = 0; i < Atuples.size(); i++) {
-		for (int j = 0; j < Btuples.size(); j++) {
-			tempTuple = Atuples[i];
-			for (int k = 0; k < Btuples[j].size(); k++) {
-				tempTuple.push_back( Btuples[j][k] );
-			}
-			tuples.push_back( tempTuple );
-			tempTuple.clear();
-		}
-	}
-	mergeTuples( Atuples );
-	return tuples;
 }
 
 
@@ -169,13 +140,6 @@ int Database::nameLocation( const string &s,  relation* &r ) {
 	return -1;
 }
 
-
-
-void Database::reorder( relation* &rel ) {
-	cout << "reorder: " << rel->attsToString();
-
-}
-
 int Database::facts() {
 	int amount = 0;
 	for (int i = 0; i < relations.size(); i++) {
@@ -183,18 +147,6 @@ int Database::facts() {
 	}
 	return amount;
 }
-
-void Database::mergeTuples( vector<vector<string>> &a ) {
-
-	for (int i = 0; i < a.size(); i++) {
-
-	}
-
-}
-void Database::mergeTuple( vector<string> &a, vector<string> &b) {
-
-}
-
 
 
 
