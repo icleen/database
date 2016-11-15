@@ -222,6 +222,7 @@ void Database::renameOutputFunc(relation* rel, int b) {
 }
 
 void Database::clear() {
+	cleanProjList();
 	for (int i = 0; i < relations.size(); i++) {
 		delete relations[i];
 	}
