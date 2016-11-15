@@ -191,7 +191,7 @@ void program( string file ) {
 //        	cout << s;
 //        	cout << "Success!\n";
         	ofstream outFile;
-        	outFile.open( "testOutput" );
+        	outFile.open( "./outputs/testOutput" );
         	outFile << s;
         	outFile.close();
         }
