@@ -9,9 +9,9 @@
 //#include "parseClass.h"
 
 
-const int TEST_NUM = 19;
+const int TEST_NUM = 20;
 const string TESTS[] = {
-		"./tests/join1.txt", "./tests/join2.txt", "./tests/join3.txt", "./tests/join4.txt", "./tests/join5.txt", "./tests/join6.txt", "./tests/relate1.txt",
+		"./tests/join1.txt", "./tests/join2.txt", "./tests/join3.txt", "./tests/join4.txt", "./tests/join5.txt", "./tests/join7.txt", "./tests/join6.txt", "./tests/relate1.txt",
 		"./tests/relate2.txt", "./tests/relate3.txt", "./tests/relate4.txt", "./tests/relate5.txt","./tests/relate6.txt", "./tests/relate7.txt",
 		"./tests/relate8.txt", "./tests/relate9.txt", "./tests/relate10.txt", "./tests/relate11.txt", "./tests/relate12.txt", "./tests/relate0.txt"
 };
@@ -186,7 +186,11 @@ void program( string file ) {
     class Database* database;
     if (parser != NULL) {
         database = createDatabase(datalog);
-        cout << database->interpretStart();
+        string s = database->interpretStart();
+        if (s != "") {
+        	cout << s << endl;
+//        	cout << "Success!\n";
+        }
     }
     
     delete database;
@@ -198,15 +202,17 @@ void program( string file ) {
 
 // Main Program
 int main(int argc, char *argv[]) {
-//    if (argc != 2) {
-//        cout << "Not correct argument, end\n";
-//        return 1;
-//    }
+    if (argc != 2) {
+        cout << "Not correct argument, end\n";
+        return 1;
+    }
 
-	for (int i = 0; i < TEST_NUM; i++) {
-		cout << "\nTest number " << i + 1 << "\n\n";
-		program( TESTS[i] );
-	}
+    program( argv[1] );
+
+//	for (int i = 0; i < TEST_NUM; i++) {
+//		cout << "\nTest number " << i + 1 << "\n";
+//		program( TESTS[i] );
+//	}
 
 	return 0;
 }
