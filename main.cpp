@@ -189,7 +189,8 @@ void program( string file ) {
         string s = database->interpretStart();
         if (s != "") {
         	cout << s << endl;
-        	cout << "Success!\n";
+//        	cout << "Success!\n";
+
         }
     }
     
