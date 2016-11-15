@@ -128,13 +128,12 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
 //    	cout << "(" << i + 1 << ") Working...\n";
         if (params[i]->typeOut() == "DOM") {
         	// select on the value
-        	selector( tempRel, i, params[i]->toString() );
+        	tempRel->selector( i, params[i]->toString() );
         }else {
         	// decide whether the VAR is already in the project list
             int  repeatIndex = repeatVar( params[i]->toString() );
             if (repeatIndex != -1) {
             	//deal with a repeated variable
-//                selector( tempRel, i, projectList[repeatIndex]->index );
             	tempRel->selector( i, projectList[repeatIndex]->index );
             }else {
             	// add to the project list for later projection and renaming
@@ -152,23 +151,6 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
     return tempRel;
 }
 
-// returns the new relation based off of the select function
-void Database::selector(relation* &r, int a, int b) {
-	 relation* tempRel = new relation( r->nameOut() );
-	tempRel->addTuples( r->select( a, b ) );
-	tempRel->addAttributes( r->attributesOut() );
-	delete r;
-	r = tempRel;
-}
-
-// returns the new relation based off of the select function
-void Database::selector(relation* &r, int a, string b) {
-	relation* tempRel = new relation( r->nameOut() );
-	tempRel->addTuples( r->select( a, b ) );
-	tempRel->addAttributes( r->attributesOut() );
-	delete r;
-	r = tempRel;
-}
 
 // returns the new relation based on the projections listed in the projectList
 void Database::projector(relation* &rel) {

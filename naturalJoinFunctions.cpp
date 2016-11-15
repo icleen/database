@@ -77,7 +77,7 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 		selectList.pop();
 		int pop2 = selectList.front();
 		selectList.pop();
-		selector( a, pop1, pop2 );
+		a->selector( pop1, pop2 );
 	}
 	return a;
 }
