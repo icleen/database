@@ -134,7 +134,8 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
             int  repeatIndex = repeatVar( params[i]->toString() );
             if (repeatIndex != -1) {
             	//deal with a repeated variable
-                selector( tempRel, i, projectList[repeatIndex]->index );
+//                selector( tempRel, i, projectList[repeatIndex]->index );
+            	tempRel->selector( i, projectList[repeatIndex]->index );
             }else {
             	// add to the project list for later projection and renaming
             	myNode* data = new myNode();

@@ -104,6 +104,25 @@ string relation::stringTuple( vector<string> t) {
 // Functions
 //
 
+void relation::selector( int a, int b ) {
+    vector< vector<string> > new_tuples;
+    for (int i = 0; i < tuples.size(); i++) {
+        if (tuples[i][a] == tuples[i][b]) {
+            new_tuples.push_back(tuples[i]);
+        }
+    }
+    tuples = new_tuples;
+}
+void relation::selector( int a, string b ) {
+    vector< vector<string> > new_tuples;
+    for (int i = 0; i < tuples.size(); i++) {
+        if (tuples[i][a] == b) {
+            new_tuples.push_back(tuples[i]);
+        }
+    }
+    tuples = new_tuples;
+}
+
 vector< vector<string> > relation::select(int attr, string value) {
     
     vector< vector<string> > new_tuples;

@@ -74,6 +74,11 @@ public:
     	name = s;
     }
 
+    void selector( int a, int b );
+    void selector( int a, string b );
+    void projector( relation* &r );
+    void renamer( relation* &rel );
+
     vector< vector<string> > select(int attr, string value);
     vector< vector<string> > select(int attr, int attr2);
     vector< vector<string> > project(vector<int> indexi);
