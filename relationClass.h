@@ -76,12 +76,10 @@ public:
 
     void selector( int a, int b );
     void selector( int a, string b );
+    void selectSame();
+    void projectUnique();
     void projector( vector<int> index);
     void renamer( relation* &rel );
-
-    vector< vector<string> > select(int attr, string value);
-    vector< vector<string> > select(int attr, int attr2);
-    vector< vector<string> > project(vector<int> indexi);
     void rename( int attrIndex, string attrName);
     void sortTuples();
 

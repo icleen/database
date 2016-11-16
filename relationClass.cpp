@@ -139,30 +139,6 @@ void relation::projector( vector<int> index ) {
     cout << "Done\n";
 }
 
-vector< vector<string> > relation::select(int attr, string value) {
-    
-    vector< vector<string> > new_tuples;
-    for (int i = 0; i < tuples.size(); i++) {
-        if (tuples[i][attr] == value) {
-            new_tuples.push_back(tuples[i]);
-        }
-    }
-    
-    return new_tuples;
-}
-
-vector< vector<string> > relation::select(int attr, int atr2) {
-    
-    vector< vector<string> > new_tuples;
-    for (int i = 0; i < tuples.size(); i++) {
-        if (tuples[i][attr] == tuples[i][atr2]) {
-            new_tuples.push_back(tuples[i]);
-        }
-    }
-    
-    return new_tuples;
-}
-
 int relation::projectIndex(string attr) {
     for (int i = 0; i < attributes.size(); i++) {
         if (attr == attributes[i]) {
@@ -170,23 +146,6 @@ int relation::projectIndex(string attr) {
         }
     }
     return -1;
-}
-
-vector< vector<string> > relation::project(vector<int> indexi) {
-    vector< vector<string> > temp;
-
-    for (int i = 0; i < tuples.size(); i++) {
-    	vector<string> tple;
-    	for (int j = 0; j < indexi.size(); j++) {
-    		int num = indexi[j];
-    		tple.push_back( tuples[i][num] );
-    	}
-    	if ( setFunction( temp, tple ) ) {
-    		temp.push_back( tple );
-    	}
-    }
-    
-    return temp;
 }
 
 bool relation::setFunction( vector< vector<string> > a, vector<string> b) {
@@ -247,6 +206,32 @@ void relation::conform( vector<ParameterClass*> params, string nme ) {
 	cout << "Done\n";
 }
 
+void relation::selectSame() {
+	for (int i = 0; i < attributes.size(); i++) {
+		for (int j = i; j < attributes.size(); j++) {
+			if ( attributes.at(i) == attributes.at(j) ) {
+				selector( i, j );
+			}
+		}
+	}
+}
+
+void relation::projectUnique() {
+	vector<int> projectList;
+	bool isUnique;
+	for (int i = 0; i < attributes.size(); i++) {
+		isUnique = true;
+		for (int j = 0; j < projectList.size(); j++) {
+			if ( attributes.at(i) == attributes.at( projectList.at(j) ) ) {
+				isUnique = false;
+			}
+		}
+		if (isUnique) {
+			projectList.push_back(i);
+		}
+	}
+	projector( projectList );
+}
 
 
 

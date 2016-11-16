@@ -75,14 +75,7 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 	totalAtts = 0;
 	a->joinRelation( b );
 	addToProjectList( a->attributesOut() );
-
-	while( !selectList.empty() ) {
-		int pop1 = selectList.front();
-		selectList.pop();
-		int pop2 = selectList.front();
-		selectList.pop();
-		a->selector( pop1, pop2 );
-	}
+	a->selectSame();
 	return a;
 }
 
@@ -95,8 +88,6 @@ void Database::addToProjectList( const vector<string> &atts ) {
 		found = false;
 		for (int j = 0; j < projectList.size(); j++) {
 			if (projectList[j]->name == atts[i]) {
-				selectList.push(j);
-				selectList.push(i);
 				found = true;
 			}
 		}
@@ -107,29 +98,6 @@ void Database::addToProjectList( const vector<string> &atts ) {
 			projectList.push_back(n);
 		}
 	}
-}
-
-
-bool Database::inProjectList( const string &name, const int &index ) {
-//	cout << "Checking if it's in project list\n";
-	for (int i = 0; i < projectList.size(); i++) {
-		if (projectList[i]->name == name) {
-//			cout << "inprojlist: " << name << endl;
-			selectList.push(i);
-			selectList.push(index);
-			return true;
-		}
-	}
-	return false;
-}
-
-int Database::nameLocation( const string &s,  relation* &r ) {
-	for (int i = 0; i < r->attSize(); i++) {
-		if (r->attribute_at(i) == s) {
-			return i;
-		}
-	}
-	return -1;
 }
 
 int Database::facts() {
