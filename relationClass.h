@@ -76,7 +76,7 @@ public:
 
     void selector( int a, int b );
     void selector( int a, string b );
-    void projector( relation* &r );
+    void projector( vector<int> index);
     void renamer( relation* &rel );
 
     vector< vector<string> > select(int attr, string value);

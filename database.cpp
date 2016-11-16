@@ -158,17 +158,11 @@ void Database::projector(relation* &rel) {
 	if ( projectList.empty() ) {
 		return;
 	}
-	relation* tempRel = new relation( rel->nameOut() );
 	vector<int> indexi;
 	for (int i = 0; i < projectList.size(); i++) {
-		int index = projectList[i]->index;
-		indexi.push_back( index );
-		tempRel->addAttribute( rel->attribute_at( index ) );
+		indexi.push_back( projectList[i]->index );
 	}
-	tempRel->addTuples( rel->project( indexi ) );
-//	tempRel->addAttributes( rel->attributesOut() );
-	delete rel;
-	rel = tempRel;
+	rel->projector( indexi );
 }
 
 

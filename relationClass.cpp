@@ -123,6 +123,20 @@ void relation::selector( int a, string b ) {
     tuples = new_tuples;
 }
 
+void relation::projector( vector<int> index ) {
+    vector< vector<string> > temp;
+    for (int i = 0; i < tuples.size(); i++) {
+    	vector<string> tple;
+    	for (int j = 0; j < index.size(); j++) {
+    		tple.push_back( tuples[i][ index[j] ] );
+    	}
+    	if ( setFunction( temp, tple ) ) {
+    		temp.push_back( tple );
+    	}
+    }
+    tuples = temp;
+}
+
 vector< vector<string> > relation::select(int attr, string value) {
     
     vector< vector<string> > new_tuples;
