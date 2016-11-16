@@ -25,6 +25,9 @@ void Database::convertRules( const vector<RuleClass*> &rules ) {
 	cout << "Schemes populated after " << times << " passes through the Rules.\n";
 	cleanProjList();
 	renameOutput = "";
+	for (int i = 0; i < relations.size(); i++) {
+		relations[i]->sortTuples();
+	}
 }
 
 relation* Database::ruler( RuleClass* rule ) {
@@ -51,12 +54,12 @@ relation* Database::ruler( RuleClass* rule ) {
 	}
 	relation* temp = tempRels.at(0);
 	if (tempRels.size() == 1) {
-        temp = conformToHead(head, temp);
+		temp->conform( head->paramsOut(), head->nameOut() );
 	}else {
 		for (int j = 1; j < tempRels.size(); j++) {
 			temp = naturalJoin( temp, tempRels.at(j) );
 		}
-		temp = conformToHead( head, temp );
+		temp->conform( head->paramsOut(), head->nameOut() );
 	}
 	for (int i = 1; i < tempRels.size(); i++) {
 		delete tempRels[i];
@@ -118,24 +121,6 @@ bool Database::inProjectList( const string &name, const int &index ) {
 		}
 	}
 	return false;
-}
-
-
-relation* Database::conformToHead( PredicateClass* &head,  relation* &rel ) {
-	cleanProjList();
-//	cout << "conform: " << rel->attsToString();
-	vector<ParameterClass*> params = head->paramsOut();
-	for (int i = 0; i < params.size(); i++) {
-		myNode* n = new myNode();
-		n->name = params[i]->toString();
-		int num = nameLocation( n->name, rel );
-		assert( num != -1 );
-		n->index = num;
-		projectList.push_back(n);
-	}
-	projector( rel );
-	rel->changeName( head->nameOut() );
-	return rel;
 }
 
 int Database::nameLocation( const string &s,  relation* &r ) {

@@ -78,7 +78,6 @@ int Database::repeatVar(string var) {
 
 string Database::interpretStart() {
 	stringstream out;
-//	cout << "relations.size: " << relations.size() << endl;
     vector<class PredicateClass*> queries = datalog->queriesOut();
     vector<relation*> tempRelations;
     relation* tempRel;
@@ -154,7 +153,7 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
 
 // returns the new relation based on the projections listed in the projectList
 void Database::projector(relation* &rel) {
-	rel->sortTuples();
+//	rel->sortTuples();
 	if ( projectList.empty() ) {
 		return;
 	}
@@ -218,6 +217,11 @@ void Database::cleanSelList() {
 	}
 }
 
+void Database::sort() {
+	for (int i = 0; i < relations.size(); i++) {
+		relations[i]->sortTuples();
+	}
+}
 
 
 

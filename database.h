@@ -70,9 +70,12 @@ private:
     void cleanSelList();
     void clear();
 
+    void sort();
+
 public:
     Database(datalogClass* data) : datalog(data) {
         makeRelations();
+        sort();
 //        cout << "Converting Rules\n";
         convertRules( datalog->rulesOut() );
 //        cout << "Converted Rules\n";

@@ -71,7 +71,7 @@ bool relation::isUnique( vector<string> t ) {
 //
 
 void relation::sortTuples() {
-//	cout << "Sort start\n";
+	cout << "Sort start\n";
 	vector<string> tempTuples;
 	for (int i = 0; i < tuples.size(); i++) {
 		 string tup = stringTuple( tuples[i] );
@@ -124,7 +124,8 @@ void relation::selector( int a, string b ) {
 }
 
 void relation::projector( vector<int> index ) {
-    vector< vector<string> > temp;
+    cout << "Projecting\n";
+	vector< vector<string> > temp;
     for (int i = 0; i < tuples.size(); i++) {
     	vector<string> tple;
     	for (int j = 0; j < index.size(); j++) {
@@ -135,6 +136,7 @@ void relation::projector( vector<int> index ) {
     	}
     }
     tuples = temp;
+    cout << "Done\n";
 }
 
 vector< vector<string> > relation::select(int attr, string value) {
@@ -207,7 +209,7 @@ void relation::rename( int attrIndex, string attrName) {
 
 
 void relation::joinRelation( relation* rel ) {
-
+	cout << "joining relations\n";
 	vector< vector<string> > newTuples;
 	vector< vector<string> > other = rel->tuplesOut();
 	vector<string> tempTuple;
@@ -221,13 +223,29 @@ void relation::joinRelation( relation* rel ) {
 			tempTuple.clear();
 		}
 	}
-	tuples.clear();
 	tuples = newTuples;
 	addAttributes( rel->attributesOut() );
-
+	cout << "Done\n";
 }
 
-
+void relation::conform( vector<ParameterClass*> params, string nme ) {
+	cout << "conforming\n";
+	name = nme;
+	vector<int> project;
+	bool found;
+	for (int i = 0; i < params.size(); i++) {
+		string s = params[i]->toString();
+		found = false;
+		for (int j = 0; j < attributes.size(); j++) {
+			if ( attributes[j] == s && !found ) {
+				project.push_back(j);
+				found = true;
+			}
+		}
+	}
+	projector( project );
+	cout << "Done\n";
+}
 
 
 
