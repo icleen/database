@@ -51,6 +51,7 @@ private:
     int repeatVar(string var);
     
     // Lab 4 functions:
+    relation* predicateRelation( relation* rel, PredicateClass* pred );
     void convertRules( const vector<RuleClass*> &rules );
     relation* ruler( RuleClass* rule );
     relation* naturalJoin( relation* &a, relation* &b );

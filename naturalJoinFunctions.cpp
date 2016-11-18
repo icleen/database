@@ -108,7 +108,18 @@ int Database::facts() {
 	return amount;
 }
 
-
+relation* Database::predicateRelation( relation* rel, PredicateClass* pred ) {
+	relation* tempRel = copyRelation( rel );
+	vector<string> s;
+	vector<ParameterClass*> params = pred->paramsOut();
+	for (int i = 0; i < params.size(); i++) {
+		s.push_back( params[i]->toString() );
+	}
+	cleanProjList();
+	addToProjectList( s );
+	projector( tempRel );
+	return tempRel;
+}
 
 
 

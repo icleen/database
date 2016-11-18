@@ -27,7 +27,7 @@ private:
     
     int projectIndex(string attr);
     
-    bool setFunction( vector< vector<string> > a, vector<string> b);
+    bool setFunction( vector< vector<string> >& a, vector<string>& b);
     string stringTuple( vector<string> t);
 
     bool isUnique( vector<string> t );
@@ -51,10 +51,10 @@ public:
     void addTuple(vector<string> tple);
     void addTuples(vector< vector<string> > tples);
     
-    vector< vector<string> > tuplesOut() {
+    vector< vector<string> >& tuplesOut() {
         return tuples;
     }
-    vector<string> attributesOut() {
+    vector<string>& attributesOut() {
     	return attributes;
     }
     int attSize() {

@@ -148,7 +148,7 @@ int relation::projectIndex(string attr) {
     return -1;
 }
 
-bool relation::setFunction( vector< vector<string> > a, vector<string> b) {
+bool relation::setFunction( vector< vector<string> >& a, vector<string>& b) {
 	for (int i = 0; i < a.size(); i++) {
 		if ( a[i] == b ) {
 			return false;
