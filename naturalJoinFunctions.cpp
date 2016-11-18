@@ -81,7 +81,7 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 
 
 void Database::addToProjectList( const vector<string> &atts ) {
-//	cout << "Adding to project list\n";
+	cout << "Adding to project list\n";
 	int i;
 	bool found = false;
 	for (i = 0; i < atts.size(); i++) {
