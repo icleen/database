@@ -46,6 +46,9 @@ private:
     void renamer(relation* &rel);
     vector<myNode*> projectList;
     
+    vector<string> projectNames;
+    vector<int> projectIndex;
+
     int relationIndex(string name);
     relation* copyRelation(relation* a);
     int repeatVar(string var);

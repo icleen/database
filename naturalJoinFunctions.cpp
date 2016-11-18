@@ -16,7 +16,7 @@ void Database::convertRules( const vector<RuleClass*> &rules ) {
 			relation* r = ruler( rules[i] );
 			if (r != NULL) {
 				int index = relationIndex( r->nameOut() );
-				relations[index]->addTuples( r->tuplesOut() );
+				relations[index]->addTuplesPtr( r->tuplesPtr() );
 			}
 			delete r;
 		}
@@ -75,7 +75,9 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 	totalAtts = 0;
 	a->joinRelation( b );
 	addToProjectList( a->attributesOut() );
+	cout << "Selecting\n";
 	a->selectSame();
+	cout << "Done\n";
 	return a;
 }
 
@@ -86,18 +88,17 @@ void Database::addToProjectList( const vector<string> &atts ) {
 	bool found = false;
 	for (i = 0; i < atts.size(); i++) {
 		found = false;
-		for (int j = 0; j < projectList.size(); j++) {
-			if (projectList[j]->name == atts[i]) {
+		for (int j = 0; j < projectNames.size(); j++) {
+			if (projectNames[j] == atts[i]) {
 				found = true;
 			}
 		}
 		if ( !found ) {
-			myNode* n = new myNode();
-			n->name = atts[i];
-			n->index =  i;
-			projectList.push_back(n);
+			projectNames.push_back(atts[i]);
+			projectIndex.push_back(i);
 		}
 	}
+	cout << "Done\n";
 }
 
 int Database::facts() {

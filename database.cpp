@@ -64,8 +64,8 @@ relation* Database::copyRelation(relation* a) {
 // returns the index of any already existing vars in the project list
 int Database::repeatVar(string var) {
 
-    for (int i = 0; i < projectList.size(); i++) {
-        if (projectList[i]->name == var) {
+    for (int i = 0; i < projectNames.size(); i++) {
+        if (projectNames[i] == var) {
             return i;
         }
     }
@@ -118,7 +118,8 @@ string Database::relationsOut() {
 // return a new relation based on the given relation and the data in the given query
 relation* Database::queryFind(relation *relat, PredicateClass *query) {
 //	cout << relationsOut();
-	cleanProjList();
+	projectNames.clear();
+	projectIndex.clear();
 	renameOutput = "";
     relation* tempRel = copyRelation(relat);
 //    cout << "Here?\n";
@@ -133,13 +134,11 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
             int  repeatIndex = repeatVar( params[i]->toString() );
             if (repeatIndex != -1) {
             	//deal with a repeated variable
-            	tempRel->selector( i, projectList[repeatIndex]->index );
+            	tempRel->selector( i, projectIndex[repeatIndex] );
             }else {
             	// add to the project list for later projection and renaming
-            	myNode* data = new myNode();
-            	data->name = params[i]->toString();
-            	data->index = i;
-            	projectList.push_back(data);
+            	projectNames.push_back( params[i]->toString() );
+            	projectIndex.push_back( i );
             }
         }
     }
@@ -154,29 +153,24 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
 // returns the new relation based on the projections listed in the projectList
 void Database::projector(relation* &rel) {
 //	rel->sortTuples();
-	if ( projectList.empty() ) {
+	if ( projectIndex.empty() ) {
 		return;
 	}
-	vector<int> indexi;
-	for (int i = 0; i < projectList.size(); i++) {
-		indexi.push_back( projectList[i]->index );
-	}
-	rel->projector( indexi );
+	rel->projector( projectIndex );
 }
 
 
 // returns a string with the relation info in it
 void Database::renamer(relation* &rel) {
-	if ( projectList.size() == 0) {
+	if ( projectNames.size() == 0) {
 		return;
 	}
-    for ( int j = 0; j < projectList.size(); j++ ) {
-        string s = projectList[j]->name;
-        rel->rename( j, s );
+    for ( int j = 0; j < projectNames.size(); j++ ) {
+        rel->rename( j, projectNames.at(j) );
     }
 //    cout << "renamed: " << rel->attsToString() << endl;
 	
-	renameOutputFunc(rel, projectList.size());
+	renameOutputFunc(rel, projectNames.size());
 }
 
 void Database::renameOutputFunc(relation* rel, int b) {
@@ -186,7 +180,7 @@ void Database::renameOutputFunc(relation* rel, int b) {
         out << "  ";
         for ( int j = 0; j < b; j++ ) {
             out << rel->attribute_at(j) << "=" << rel->tuple_at( i, j);
-            if ( j < projectList.size() - 1 ) {
+            if ( j < projectNames.size() - 1 ) {
                 out << ", ";
             }
         }

@@ -51,6 +51,11 @@ public:
     void addTuple(vector<string> tple);
     void addTuples(vector< vector<string> > tples);
     
+    void addTuplesPtr(vector< vector<string> >* tples);
+    vector< vector<string> >* tuplesPtr() {
+         return &tuples;
+     }
+
     vector< vector<string> >& tuplesOut() {
         return tuples;
     }

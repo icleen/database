@@ -47,6 +47,16 @@ void relation::addTuple(vector<string> tple) {
 	}
 }
 
+void relation::addTuplesPtr(vector< vector<string> >* tples) {
+
+	for (int i = 0; i < tples->size(); i++) {
+		if  (isUnique( tples->at(i) ) ) {
+			tuples.push_back(tples->at(i));
+		}
+	}
+
+}
+
 void relation::addTuples(vector< vector<string> > tples) {
 
 	for (int i = 0; i < tples.size(); i++) {
@@ -170,19 +180,20 @@ void relation::rename( int attrIndex, string attrName) {
 void relation::joinRelation( relation* rel ) {
 	cout << "joining relations\n";
 	vector< vector<string> > newTuples;
-	vector< vector<string> > other = rel->tuplesOut();
+	vector< vector<string> >* other = rel->tuplesPtr();
 	vector<string> tempTuple;
 	for (int i = 0; i < tuples.size(); i++) {
-		for (int j = 0; j < other.size(); j++) {
+		for (int j = 0; j < other->size(); j++) {
 			tempTuple = tuples[i];
-			for (int k = 0; k < other[j].size(); k++) {
-				tempTuple.push_back( other[j][k] );
+			for (int k = 0; k < other->at(j).size(); k++) {
+				tempTuple.push_back( other->at(j).at(k) );
 			}
 			newTuples.push_back( tempTuple );
 			tempTuple.clear();
 		}
 	}
 	tuples = newTuples;
+	cout << "adding Attrs\n";
 	addAttributes( rel->attributesOut() );
 	cout << "Done\n";
 }
