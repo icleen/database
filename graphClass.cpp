@@ -110,6 +110,15 @@ string graphClass::pathOutput( stack<int> stck ) {
 	return output.str();
 }
 
+string graphClass::pathIndexOutput( stack<int> stck ) {
+	stringstream output;
+	while ( !stck.empty() ) {
+		output << stck.top();
+		stck.pop();
+	}
+	return output.str();
+}
+
 stack<int> graphClass::POT() {
 //	resetVisit();
 //	clearStack();
@@ -137,10 +146,25 @@ vector<string> graphClass::DFS( stack<int> stck ) {
 	return components;
 }
 
+vector<string> graphClass::DFSindex( stack<int> stck ) {
+	vector<string> components;
+//	resetVisit();
+	while ( !stck.empty() ) {
+		traverse( stck.top() );
+		string s = pathIndexOutput( mystack );
+		if ( s != "" ) {
+			components.push_back( s );
+		}
+		clearStack();
+		stck.pop();
+	}
+	return components;
+}
+
 string graphClass::DFSOutput( vector<string> dfs ) {
 	stringstream output;
 //	resetVisit();
-	output << "These are the strongly connected components:\n";
+//	output << "These are the strongly connected components:\n";
 	for (int i = 0; i < dfs.size(); i++) {
 		output << dfs.at(i) << endl;
 	}
@@ -171,6 +195,12 @@ string graphClass::SCC() {
 	return s;
 }
 
+string graphClass::SCCindex() {
+	graphClass* rvrse = reverse();
+	string s = DFSOutput( DFSindex( rvrse->POT() ) );
+	delete rvrse;
+	return s;
+}
 
 
 

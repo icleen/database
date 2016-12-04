@@ -63,14 +63,17 @@ public:
 	gnode* nodeat(int index);
 
 	vector<string> DFS( stack<int> stck );
+	vector<string> DFSindex( stack<int> stck );
 	stack<int> POT();
 	string traverse( int id );
 	string pathOutput( string path );
 	string pathOutput(  stack<int> stck );
+	string pathIndexOutput(  stack<int> stck );
 	string DFSOutput( vector<string> dfs );
+	string DFSIndexOutput( vector<string> dfs );
 	graphClass* reverse();
 	string SCC();
-
+	string SCCindex();
 };
 
 

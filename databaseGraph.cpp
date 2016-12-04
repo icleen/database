@@ -22,7 +22,11 @@ void Database::makeGraph( const vector<RuleClass*> &rules ) {
 			}
 		}
 	}
-	cout << graph->SCC();
+	string graphput = graph->SCCindex();
+	for (int i = 0; i < graphput.size(); i++) {
+		cout << "R" << graphput[i] << " ";
+	}
+	cout << endl;
 }
 
 
