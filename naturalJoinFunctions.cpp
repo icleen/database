@@ -73,17 +73,17 @@ relation* Database::naturalJoin( relation* &a, relation* &b ) {
 	cleanProjList();
 	cleanSelList();
 	totalAtts = 0;
+//	addToProjectList( a->attributesOut() );
 	a->joinRelation( b );
-	addToProjectList( a->attributesOut() );
-	cout << "Selecting\n";
+//	cout << "Selecting\n";
 	a->selectSame();
-	cout << "Done\n";
+//	cout << "Done\n";
 	return a;
 }
 
 
 void Database::addToProjectList( const vector<string> &atts ) {
-	cout << "Adding to project list\n";
+//	cout << "Adding to project list\n";
 	int i;
 	bool found = false;
 	for (i = 0; i < atts.size(); i++) {
@@ -98,7 +98,7 @@ void Database::addToProjectList( const vector<string> &atts ) {
 			projectIndex.push_back(i);
 		}
 	}
-	cout << "Done\n";
+//	cout << "Done\n";
 }
 
 int Database::facts() {

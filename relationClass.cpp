@@ -81,7 +81,7 @@ bool relation::isUnique( vector<string> t ) {
 //
 
 void relation::sortTuples() {
-	cout << "Sort start\n";
+//	cout << "Sort start\n";
 	vector<string> tempTuples;
 	for (int i = 0; i < tuples.size(); i++) {
 		 string tup = stringTuple( tuples[i] );
@@ -134,7 +134,7 @@ void relation::selector( int a, string b ) {
 }
 
 void relation::projector( vector<int> index ) {
-    cout << "Projecting\n";
+//    cout << "Projecting\n";
 	vector< vector<string> > temp;
     for (int i = 0; i < tuples.size(); i++) {
     	vector<string> tple;
@@ -146,7 +146,7 @@ void relation::projector( vector<int> index ) {
     	}
     }
     tuples = temp;
-    cout << "Done\n";
+//    cout << "Done\n";
 }
 
 int relation::projectIndex(string attr) {
@@ -178,7 +178,7 @@ void relation::rename( int attrIndex, string attrName) {
 
 
 void relation::joinRelation( relation* rel ) {
-	cout << "joining relations\n";
+//	cout << "joining relations\n";
 	vector< vector<string> > newTuples;
 	vector< vector<string> >* other = rel->tuplesPtr();
 	vector<string> tempTuple;
@@ -193,18 +193,19 @@ void relation::joinRelation( relation* rel ) {
 		}
 	}
 	tuples = newTuples;
-	cout << "adding Attrs\n";
+//	cout << "adding Attrs\n";
 	addAttributes( rel->attributesOut() );
-	cout << "Done\n";
+//	cout << "Done\n";
 }
 
 void relation::conform( vector<ParameterClass*> params, string nme ) {
-	cout << "conforming\n";
+//	cout << "conforming\n";
 	name = nme;
 	vector<int> project;
 	bool found;
+	string s;
 	for (int i = 0; i < params.size(); i++) {
-		string s = params[i]->toString();
+		s = params[i]->toString();
 		found = false;
 		for (int j = 0; j < attributes.size(); j++) {
 			if ( attributes[j] == s && !found ) {
@@ -214,7 +215,7 @@ void relation::conform( vector<ParameterClass*> params, string nme ) {
 		}
 	}
 	projector( project );
-	cout << "Done\n";
+//	cout << "Done\n";
 }
 
 void relation::selectSame() {
@@ -228,20 +229,20 @@ void relation::selectSame() {
 }
 
 void relation::projectUnique() {
-	vector<int> projectList;
-	bool isUnique;
+	vector<int> project;
+	bool found;
+	string s;
 	for (int i = 0; i < attributes.size(); i++) {
-		isUnique = true;
-		for (int j = 0; j < projectList.size(); j++) {
-			if ( attributes.at(i) == attributes.at( projectList.at(j) ) ) {
-				isUnique = false;
+		s = attributes[i];
+		found = false;
+		for (int j = i + 1; j < attributes.size(); j++) {
+			if ( attributes[j] == s && !found ) {
+				project.push_back(j);
+				found = true;
 			}
 		}
-		if (isUnique) {
-			projectList.push_back(i);
-		}
 	}
-	projector( projectList );
+	projector( project );
 }
 
 

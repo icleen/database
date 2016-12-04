@@ -9,9 +9,9 @@
 //#include "parseClass.h"
 
 
-const int TEST_NUM = 20;
+const int TEST_NUM = 9;
 const string TESTS[] = {
-		"./tests/join1.txt", "./tests/join2.txt", "./tests/join3.txt", "./tests/join4.txt", "./tests/join5.txt", "./tests/join7.txt", "./tests/join6.txt", "./tests/relate1.txt",
+		"./tests/join1.txt", "./tests/join2.txt", "./tests/join3.txt", "./tests/join4.txt", "./tests/join5.txt", "./tests/join6.txt", "./tests/join8.txt", "./tests/relate1.txt",
 		"./tests/relate2.txt", "./tests/relate3.txt", "./tests/relate4.txt", "./tests/relate5.txt","./tests/relate6.txt", "./tests/relate7.txt",
 		"./tests/relate8.txt", "./tests/relate9.txt", "./tests/relate10.txt", "./tests/relate11.txt", "./tests/relate12.txt", "./tests/relate0.txt"
 };
@@ -188,7 +188,7 @@ void program( string file ) {
         database = createDatabase(datalog);
         string s = database->interpretStart();
         if (s != "") {
-//        	cout << s;
+        	cout << s;
 //        	cout << "Success!\n";
         	ofstream outFile;
         	outFile.open( "./Outputs/testOutput" );
@@ -212,7 +212,7 @@ int main(int argc, char *argv[]) {
     	for (int i = 0; i < TEST_NUM; i++) {
     		cout << "\nTest number " << i + 1 << "\n";
     		program( TESTS[i] );
-    		cout << "Success!\n";
+//    		cout << "Success!\n";
     	}
     }else {
     	program( argv[1] );
