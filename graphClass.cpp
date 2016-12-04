@@ -2,7 +2,7 @@
 
 void graphClass::clear() {
 	for (int i = 0; i < nodes.size(); i++) {
-		delete nodes.at(i);
+		delete nodes[i];
 	}
 	nodes.clear();
 }
@@ -166,7 +166,9 @@ graphClass* graphClass::reverse() {
 
 string graphClass::SCC() {
 	graphClass* rvrse = reverse();
-	return DFSOutput( DFS( rvrse->POT() ) );
+	string s = DFSOutput( DFS( rvrse->POT() ) );
+	delete rvrse;
+	return s;
 }
 
 

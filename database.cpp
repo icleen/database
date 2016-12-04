@@ -196,6 +196,7 @@ void Database::clear() {
 	for (int i = 0; i < relations.size(); i++) {
 		delete relations[i];
 	}
+	delete graph;
 }
 
 void Database::cleanProjList() {
