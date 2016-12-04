@@ -21,39 +21,43 @@ void graphClass::clearStack() {
 }
 
 void graphClass::addKey( string ky ) {
+	key.push_back( ky );
+}
+
+void graphClass::addKeys( vector<string> ky ) {
 	key = ky;
 }
 
-void graphClass::importFromFile( string fileName ) {
-	ifstream file;
-	file.open( fileName.c_str() );
-	if( file.fail() ) {
-		cout << "File not found!" << endl;
-		return;
-	}
-	string inodes;
-	getline( file, inodes );
-	key = inodes;
-	makeNodes( inodes.size() );
-	string iedge;
-	int a, b;
-	while( getline( file, iedge ) ) {
-		assert( iedge.size() == 2 );
-		a = 0;
-		b = 0;
-		for (int j = 0; j < inodes.size(); j++) {
-			if ( iedge.at(0) == inodes.at(j) ) {
-				a = j;
-			}
-			if ( iedge.at(1) == inodes.at(j) ) {
-				b = j;
-			}
-		}
-		makeEdge( a, b );
-	}
-//	cout << id << endl;
-	file.close();
-}
+//void graphClass::importFromFile( string fileName ) {
+//	ifstream file;
+//	file.open( fileName.c_str() );
+//	if( file.fail() ) {
+//		cout << "File not found!" << endl;
+//		return;
+//	}
+//	string inodes;
+//	getline( file, inodes );
+//	key = inodes;
+//	makeNodes( inodes.size() );
+//	string iedge;
+//	int a, b;
+//	while( getline( file, iedge ) ) {
+//		assert( iedge.size() == 2 );
+//		a = 0;
+//		b = 0;
+//		for (int j = 0; j < inodes.size(); j++) {
+//			if ( iedge.at(0) == inodes.at(j) ) {
+//				a = j;
+//			}
+//			if ( iedge.at(1) == inodes.at(j) ) {
+//				b = j;
+//			}
+//		}
+//		makeEdge( a, b );
+//	}
+////	cout << id << endl;
+//	file.close();
+//}
 
 void graphClass::makeNodes( int amount ) {
 	for (int i = 0; i < amount; i++) {
@@ -146,7 +150,7 @@ string graphClass::DFSOutput( vector<string> dfs ) {
 graphClass* graphClass::reverse() {
 	graphClass* ng = new graphClass();
 	ng->makeNodes( key.size() );
-	ng->addKey( key );
+	ng->addKeys( key );
 	int a,b;
 	for (int i = 0; i < nodes.size(); i++) {
 		a = 0;

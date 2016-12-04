@@ -16,7 +16,7 @@
 
 #include "datalogProgram.h"
 #include "relationClass.h"
-
+#include "graphClass.h"
 
 using namespace std;
 
@@ -75,6 +75,10 @@ private:
     void clear();
 
     void sort();
+
+//    lab 5 functions:
+    graphClass* graph;
+    void makeGraph( const vector<RuleClass*> &rules );
 
 public:
     Database(datalogClass* data) : datalog(data) {

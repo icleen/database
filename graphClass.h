@@ -29,7 +29,7 @@ class graphClass {
 private:
 	int id;
 	vector<gnode*> nodes;
-	string key;
+	vector<string> key;
 	stack<int> mystack;
 
 public:
@@ -40,8 +40,9 @@ public:
 		clear();
 	};
 
-	void importFromFile( string fileName );
+//	void importFromFile( string fileName );
 	void addKey( string ky );
+	void addKeys( vector<string> ky );
 	void makeNodes( int amount );
 	void makeEdge( int nodeId, int toptr );
 	void clear();
