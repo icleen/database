@@ -79,6 +79,8 @@ private:
 //    lab 5 functions:
     graphClass* graph;
     void makeGraph( const vector<RuleClass*> &rules );
+    void makeNodes( int size );
+    void makeEdges();
 
 public:
     Database(datalogClass* data) : datalog(data) {
