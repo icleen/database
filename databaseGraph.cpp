@@ -12,6 +12,7 @@ void Database::makeGraph( const vector<RuleClass*> &rules ) {
 	 */
 	for (int i = 0; i < rules.size(); i++) {
 		head = rules[i]->headOut();
+		graph->addKey( head->nameOut() );
 		for (int j = 0; j < rules.size(); j++) {
 			preds = rules.at(j)->predicatesOut();
 			for (int k = 0; k < preds.size(); k++) {
@@ -21,8 +22,7 @@ void Database::makeGraph( const vector<RuleClass*> &rules ) {
 			}
 		}
 	}
+	cout << graph->SCC();
 }
 
-void Database::makeNodes( int size ) {
 
-}

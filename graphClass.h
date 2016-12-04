@@ -29,6 +29,7 @@ class graphClass {
 private:
 	int id;
 	vector<gnode*> nodes;
+//	string key;
 	vector<string> key;
 	stack<int> mystack;
 
