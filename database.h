@@ -85,8 +85,8 @@ public:
         makeRelations();
         sort();
         makeGraph( datalog->rulesOut() );
-//        cout << "Converting Rules\n";
-//        convertRules( datalog->rulesOut() );
+        cout << "Rule Evaluation\n";
+        convertRules( datalog->rulesOut() );
 //        cout << "Converted Rules\n";
     };
     ~Database() {
