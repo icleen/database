@@ -1,5 +1,13 @@
 #include "graphClass.h"
 
+vector< vector<int> > graphClass::graphOut() {
+	vector< vector<int> > gr;
+	for (int i = 0; i < nodes.size(); i++) {
+		gr.push_back( nodes.at(i)->getEdges() );
+	}
+	return gr;
+}
+
 void graphClass::clear() {
 	for (int i = 0; i < nodes.size(); i++) {
 		delete nodes[i];
@@ -69,7 +77,15 @@ void graphClass::makeNodes( int amount ) {
 void graphClass::makeEdge( int nodeId, int toptr ) {
 	assert( toptr < nodes.size() );
 	gnode* gn = nodes.at(toptr);
-	nodes.at(nodeId)->edges.push_back(gn);
+	bool found = false;
+	for (int i = 0; i < nodes.at(nodeId)->edges.size(); i++) {
+		if ( nodes.at(nodeId)->edges.at(i)->id == gn->id ) {
+			found = true;
+		}
+	}
+	if (!found) {
+		nodes.at(nodeId)->edges.push_back(gn);
+	}
 }
 
 string graphClass::traverse( int id ) {

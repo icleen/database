@@ -9,7 +9,7 @@
 //#include "parseClass.h"
 
 
-const int TEST_NUM = 9;
+const int TEST_NUM = 7;
 const string TESTS[] = {
 		"./tests/join1.txt", "./tests/join2.txt", "./tests/join3.txt", "./tests/join4.txt", "./tests/join5.txt", "./tests/join6.txt", "./tests/join8.txt", "./tests/relate1.txt",
 		"./tests/relate2.txt", "./tests/relate3.txt", "./tests/relate4.txt", "./tests/relate5.txt","./tests/relate6.txt", "./tests/relate7.txt",

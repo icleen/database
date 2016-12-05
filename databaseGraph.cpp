@@ -22,9 +22,17 @@ void Database::makeGraph( const vector<RuleClass*> &rules ) {
 			}
 		}
 	}
-	string graphput = graph->SCCindex();
-	for (int i = 0; i < graphput.size(); i++) {
-		cout << "R" << graphput[i] << " ";
+	vector< vector<int> > g = graph->graphOut();
+	cout << "Dependency graph:\n";
+	for (int i = 0; i < g.size(); i++) {
+		cout << "R" << i << ":";
+		for (int j = 0; j < g.at(i).size(); j++) {
+			cout << "R" << g.at(i).at(j);
+			if (j < g.at(i).size() - 1) {
+				cout << ",";
+			}
+		}
+		cout << endl;
 	}
 	cout << endl;
 }

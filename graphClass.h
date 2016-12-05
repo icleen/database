@@ -12,7 +12,8 @@
 
 using namespace std;
 
-struct gnode {
+class gnode {
+public:
 	gnode( int i ) {
 		id = i;
 		parent = -1;
@@ -22,6 +23,13 @@ struct gnode {
 	vector<gnode*> edges;
 	bool visited;
 	int parent;
+	vector<int> getEdges() {
+		vector<int> e;
+		for (int i = 0; i < edges.size(); i++) {
+			e.push_back(edges[i]->id);
+		}
+		return e;
+	};
 };
 
 class graphClass {
@@ -74,6 +82,8 @@ public:
 	graphClass* reverse();
 	string SCC();
 	string SCCindex();
+
+	vector< vector<int> > graphOut();
 };
 
 
