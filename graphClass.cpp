@@ -219,7 +219,16 @@ vector< vector<int> > graphClass::SCCindex() {
 	return g;
 }
 
-
+bool graphClass::isTrivial( int index ) {
+	assert( index < nodes.size() );
+	for (int i = 0; i < nodes.at(index)->edges.size(); i++) {
+		if ( nodes.at(index)->edges.at(i)->id == nodes.at(index)->id ) {
+//			cout << "yes\n";
+			return false;
+		}
+	}
+	return true;
+}
 
 
 

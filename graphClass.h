@@ -82,6 +82,7 @@ public:
 	graphClass* reverse();
 	string SCC();
 	vector< vector<int> > SCCindex();
+	bool isTrivial( int index );
 
 	vector< vector<int> > graphOut();
 };

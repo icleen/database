@@ -60,18 +60,23 @@ void Database::optimizedRules() {
 					ss << ",";
 				}
 			}
-			if ( !use.empty() ) {
-				cout << convertRules( use ) << " passes: " << ss.str() << endl;
+			cout << convertRules( use ) << " passes: " << ss.str() << endl;
+			use.clear();
+		}else if ( !g.at(i).empty() ){
+			if ( !graph->isTrivial( g.at(i).at(0) ) ) {
+				use.push_back( rules.at( g.at(i).at(0) ) );
+				cout << convertRules( use ) << " passes: R" << g.at(i).at(0) << endl;
+			}else {
+				relation* r = ruler( rules.at( g.at(i).at(0) ) );
+				if (r != NULL) {
+					int index = relationIndex( r->nameOut() );
+					relations[index]->addTuplesPtr( r->tuplesPtr() );
+				}
+				delete r;
+				cout << 1 << " passes: R" << g.at(i).at(0) << endl;
+				use.clear();
 			}
-			use.clear();
-		}else if (g.at(i).empty()){
-			//
-		}else {
-			use.push_back( rules.at( g.at(i).at(0) ) );
-			cout << convertRules( use ) << " passes: " << g.at(i).at(0) << endl;
-			use.clear();
 		}
-
 	}
 
 }
