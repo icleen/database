@@ -162,19 +162,20 @@ vector<string> graphClass::DFS( stack<int> stck ) {
 	return components;
 }
 
-vector<string> graphClass::DFSindex( stack<int> stck ) {
-	vector<string> components;
-//	resetVisit();
+vector< vector<int> > graphClass::DFSindex( stack<int> stck ) {
+	vector< vector<int> > output;
+	vector<int> components;
 	while ( !stck.empty() ) {
 		traverse( stck.top() );
-		string s = pathIndexOutput( mystack );
-		if ( s != "" ) {
-			components.push_back( s );
+		while ( !mystack.empty() ) {
+			components.push_back( mystack.top() );
+			mystack.pop();
 		}
-		clearStack();
+		output.push_back( components );
+		components.clear();
 		stck.pop();
 	}
-	return components;
+	return output;
 }
 
 string graphClass::DFSOutput( vector<string> dfs ) {
@@ -211,11 +212,11 @@ string graphClass::SCC() {
 	return s;
 }
 
-string graphClass::SCCindex() {
+vector< vector<int> > graphClass::SCCindex() {
 	graphClass* rvrse = reverse();
-	string s = DFSOutput( DFSindex( rvrse->POT() ) );
+	vector< vector<int> > g = DFSindex( rvrse->POT() );
 	delete rvrse;
-	return s;
+	return g;
 }
 
 

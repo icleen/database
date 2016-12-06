@@ -1,12 +1,11 @@
 Schemes:
 A(a,b)
-rA(a,b)
-Reflexive(a,b)
-
-colB(b)
-Symmetric(a,b)
-Transitive(a,b)
-SymTran(a,b)
+B(A,B)
+C(A,B)
+D(A,B)
+E(A,B)
+F(A,B)
+G(A,B)
 
 Facts:
 A('1','2').
@@ -22,20 +21,14 @@ A('9','10').
 Rules:
 
 
-SymTran(X,Y) :- SymTran(Y,X).
-SymTran(X,Z) :- SymTran(X,Y),SymTran(Y,Z).
-SymTran(X,Y) :- A(Y,X).
+A(X,Y) :- B(X,Y), C(X,Y). # R0
+B(X,Y) :- A(X,Y), D(X,Y). # R1
+B(X,Y) :- B(Y,X).         # R2
+E(X,Y) :- F(X,Y), G(X,Y). # R3
+E(X,Y) :- E(X,Y), F(X,Y).  # R4
 
 
 Queries:
-    rA(a,b)?
-
-Symmetric(Q,R)?
-Reflexive(Q,R)?
-
-Transitive('1',P)?
-A('1','2')?
-Symmetric('2','1')?
-SymTran(X,Y)?
-#|
-More basic version of join6 to help debug the time problem
+    A(a,b)?
+    B(a,b)?
+    E(a,b)?

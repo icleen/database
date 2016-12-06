@@ -6,7 +6,7 @@
 //	Making New Relations from the Rules
 //
 
-void Database::convertRules( const vector<RuleClass*> &rules ) {
+int Database::convertRules( const vector<RuleClass*> &rules ) {
 //	cout << "ConvertRules\n";
 	int relationSize = 0;
 	int times = 0;
@@ -22,12 +22,13 @@ void Database::convertRules( const vector<RuleClass*> &rules ) {
 		}
 		times++;
 	}while ( relationSize != facts() );
-	cout << "Schemes populated after " << times << " passes through the Rules.\n";
+//	cout << "Schemes populated after " << times << " passes through the Rules.\n";
 	cleanProjList();
 	renameOutput = "";
 	for (int i = 0; i < relations.size(); i++) {
 		relations[i]->sortTuples();
 	}
+	return times;
 }
 
 relation* Database::ruler( RuleClass* rule ) {

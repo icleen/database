@@ -22,19 +22,57 @@ void Database::makeGraph( const vector<RuleClass*> &rules ) {
 			}
 		}
 	}
-	vector< vector<int> > g = graph->graphOut();
-	cout << "Dependency graph:\n";
-	for (int i = 0; i < g.size(); i++) {
-		cout << "R" << i << ":";
-		for (int j = 0; j < g.at(i).size(); j++) {
-			cout << "R" << g.at(i).at(j);
-			if (j < g.at(i).size() - 1) {
-				cout << ",";
-			}
-		}
-		cout << endl;
-	}
-	cout << endl;
+	cout << "Dependency graph:\n" << graphOut( graph->graphOut() );
 }
 
+string Database::graphOut( vector< vector<int> > gr ) {
+	stringstream out;
+//	out << "Dependency graph:\n";
+	for (int i = 0; i < gr.size(); i++) {
+		out << "R" << i << ":";
+		for (int j = 0; j < gr.at(i).size(); j++) {
+			out << "R" << gr.at(i).at(j);
+			if (j < gr.at(i).size() - 1) {
+				out << ",";
+			}
+		}
+		out << endl;
+	}
+	out << endl;
+	return out.str();
+}
+
+void Database::optimizedRules() {
+//	cout << "ConvertRules\n";
+	vector< vector<int> >  g = graph->SCCindex();
+//	cout << "SCC graph:\n" << graphOut( g );
+	vector<RuleClass*> rules = datalog->rulesOut();
+	assert( g.size() == rules.size() );
+	vector<RuleClass*> use;
+
+	for (int i = 0; i < g.size(); i++) {
+		stringstream ss;
+		if ( 1 < g.at(i).size() ) {
+			for (int j = 0; j < g.at(i).size(); j++) {
+				use.push_back( rules.at( g.at(i).at(j) ) );
+				ss << "R" << g.at(i).at(j);
+				if ( j < g.at(i).size()- 1) {
+					ss << ",";
+				}
+			}
+			if ( !use.empty() ) {
+				cout << convertRules( use ) << " passes: " << ss.str() << endl;
+			}
+			use.clear();
+		}else if (g.at(i).empty()){
+			//
+		}else {
+			use.push_back( rules.at( g.at(i).at(0) ) );
+			cout << convertRules( use ) << " passes: " << g.at(i).at(0) << endl;
+			use.clear();
+		}
+
+	}
+
+}
 

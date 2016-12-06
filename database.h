@@ -55,7 +55,7 @@ private:
     
     // Lab 4 functions:
     relation* predicateRelation( relation* rel, PredicateClass* pred );
-    void convertRules( const vector<RuleClass*> &rules );
+    int convertRules( const vector<RuleClass*> &rules );
     relation* ruler( RuleClass* rule );
     relation* naturalJoin( relation* &a, relation* &b );
     void addToProjectList( const vector<string> &s );
@@ -79,6 +79,8 @@ private:
 //    lab 5 functions:
     graphClass* graph;
     void makeGraph( const vector<RuleClass*> &rules );
+    void optimizedRules();
+    string graphOut( vector< vector<int> > gr );
 
 public:
     Database(datalogClass* data) : datalog(data) {
@@ -86,7 +88,8 @@ public:
         sort();
         makeGraph( datalog->rulesOut() );
         cout << "Rule Evaluation\n";
-        convertRules( datalog->rulesOut() );
+        optimizedRules();
+//        convertRules( datalog->rulesOut() );
 //        cout << "Converted Rules\n";
     };
     ~Database() {
