@@ -1,0 +1,20 @@
+Dependency Graph
+R0:R1,R2
+R1:R0
+R2:R1,R2
+R3:
+R4:R3,R4
+
+Rule Evaluation
+1 passes: R2
+1 passes: R1
+1 passes: R0
+1 passes: R3
+1 passes: R4
+
+Query Evaluation
+A(a,b)? Yes()
+
+
+B(a,b)?
+E(a,b)?
