@@ -42,7 +42,7 @@ void relation::addAttributes(vector<string> attrs) {
 }
 
 void relation::addTuple(vector<string> tple) {
-	if ( setFunction(tuples, tple) ) {
+	if ( isUnique(tple) ) {
 		tuples.push_back(tple);
 	}
 }
@@ -50,7 +50,7 @@ void relation::addTuple(vector<string> tple) {
 void relation::addTuplesPtr(vector< vector<string> >* tples) {
 
 	for (int i = 0; i < tples->size(); i++) {
-		if  (isUnique( tples->at(i) ) ) {
+		if   (isUnique( tples->at(i) ) ) {
 			tuples.push_back(tples->at(i));
 		}
 	}
@@ -60,7 +60,7 @@ void relation::addTuplesPtr(vector< vector<string> >* tples) {
 void relation::addTuples(vector< vector<string> > tples) {
 
 	for (int i = 0; i < tples.size(); i++) {
-		if  (isUnique( tples.at(i) ) ) {
+		if  ( isUnique( tples.at(i) ) ) {
 			tuples.push_back(tples[i]);
 		}
 	}
@@ -141,9 +141,7 @@ void relation::projector( vector<int> index ) {
     	for (int j = 0; j < index.size(); j++) {
     		tple.push_back( tuples[i][ index[j] ] );
     	}
-    	if ( setFunction( temp, tple ) ) {
-    		temp.push_back( tple );
-    	}
+    	temp.push_back( tple );
     }
     tuples = temp;
 //    cout << "Done\n";
