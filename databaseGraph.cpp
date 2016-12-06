@@ -22,7 +22,7 @@ void Database::makeGraph( const vector<RuleClass*> &rules ) {
 			}
 		}
 	}
-	cout << "Dependency graph:\n" << graphOut( graph->graphOut() );
+	cout << "Dependency Graph\n" << graphOut( graph->graphOut() );
 }
 
 string Database::graphOut( vector< vector<int> > gr ) {
@@ -49,14 +49,18 @@ void Database::optimizedRules() {
 	vector<RuleClass*> rules = datalog->rulesOut();
 	assert( g.size() == rules.size() );
 	vector<RuleClass*> use;
-
+	vector<int> ruleIndex;
 	for (int i = 0; i < g.size(); i++) {
 		stringstream ss;
 		if ( 1 < g.at(i).size() ) {
 			for (int j = 0; j < g.at(i).size(); j++) {
 				use.push_back( rules.at( g.at(i).at(j) ) );
-				ss << "R" << g.at(i).at(j);
-				if ( j < g.at(i).size()- 1) {
+				ruleIndex.push_back( g.at(i).at(j) );
+			}
+			vectorSort( ruleIndex );
+			for (int k = 0; k < ruleIndex.size(); k++) {
+				ss << "R" << ruleIndex.at(k);
+				if ( k < g.at(i).size()- 1) {
 					ss << ",";
 				}
 			}
@@ -78,6 +82,24 @@ void Database::optimizedRules() {
 			}
 		}
 	}
+	for (int i = 0; i < relations.size(); i++) {
+		relations[i]->sortTuples();
+	}
+}
 
+void Database::vectorSort( vector<int> &a ) {
+	int x;
+	int temp;
+	for (int i = 0; i < a.size(); i++) {
+		x = i;
+		for (int j = i; j < a.size(); j++) {
+			if ( a[x] > a[j] ) {
+				temp = a[j];
+				a[j] = a[x];
+				a[x] = temp;
+				x = j;
+			}
+		}
+	}
 }
 

@@ -81,6 +81,7 @@ private:
     void makeGraph( const vector<RuleClass*> &rules );
     void optimizedRules();
     string graphOut( vector< vector<int> > gr );
+    void vectorSort( vector<int> &a );
 
 public:
     Database(datalogClass* data) : datalog(data) {
