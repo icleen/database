@@ -82,6 +82,7 @@ private:
     void optimizedRules();
     string graphOut( vector< vector<int> > gr );
     void vectorSort( vector<int> &a );
+    string ruleOrder( vector<int> a, int b );
 
 public:
     Database(datalogClass* data) : datalog(data) {

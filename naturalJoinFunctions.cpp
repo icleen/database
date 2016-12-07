@@ -25,9 +25,7 @@ int Database::convertRules( const vector<RuleClass*> &rules ) {
 //	cout << "Schemes populated after " << times << " passes through the Rules.\n";
 	cleanProjList();
 	renameOutput = "";
-	for (int i = 0; i < relations.size(); i++) {
-		relations[i]->sortTuples();
-	}
+	sort();
 	return times;
 }
 

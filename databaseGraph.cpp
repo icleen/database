@@ -57,15 +57,8 @@ void Database::optimizedRules() {
 				use.push_back( rules.at( g.at(i).at(j) ) );
 				ruleIndex.push_back( g.at(i).at(j) );
 			}
-			vectorSort( ruleIndex );
-			for (int k = 0; k < ruleIndex.size(); k++) {
-				ss << "R" << ruleIndex.at(k);
-				if ( k < g.at(i).size()- 1) {
-					ss << ",";
-				}
-			}
+			ss << ruleOrder( ruleIndex, (g.at(i).size()- 1) );
 			cout << convertRules( use ) << " passes: " << ss.str() << endl;
-			use.clear();
 		}else if ( !g.at(i).empty() ){
 			if ( !graph->isTrivial( g.at(i).at(0) ) ) {
 				use.push_back( rules.at( g.at(i).at(0) ) );
@@ -78,13 +71,12 @@ void Database::optimizedRules() {
 				}
 				delete r;
 				cout << 1 << " passes: R" << g.at(i).at(0) << endl;
-				use.clear();
 			}
 		}
+		use.clear();
+		ruleIndex.clear();
 	}
-	for (int i = 0; i < relations.size(); i++) {
-		relations[i]->sortTuples();
-	}
+	sort();
 }
 
 void Database::vectorSort( vector<int> &a ) {
@@ -101,5 +93,17 @@ void Database::vectorSort( vector<int> &a ) {
 			}
 		}
 	}
+}
+
+string Database::ruleOrder( vector<int> a, int b ) {
+	stringstream ss;
+	vectorSort( a );
+	for (int k = 0; k < a.size(); k++) {
+		ss << "R" << a.at(k);
+		if ( k < b ) {
+			ss << ",";
+		}
+	}
+	return ss.str();
 }
 
