@@ -44,37 +44,36 @@ string Database::graphOut( vector< vector<int> > gr ) {
 
 void Database::optimizedRules() {
 //	cout << "ConvertRules\n";
-	vector< vector<int> >  g = graph->SCCindex();
+	vector< set<int> >  g = graph->SCCindex();
 //	cout << "SCC graph:\n" << graphOut( g );
 	vector<RuleClass*> rules = datalog->rulesOut();
 	assert( g.size() == rules.size() );
 	vector<RuleClass*> use;
-	vector<int> ruleIndex;
+	set<int>::iterator it;
 	for (int i = 0; i < g.size(); i++) {
 		stringstream ss;
+		it = g.at(i).begin();
 		if ( 1 < g.at(i).size() ) {
-			for (int j = 0; j < g.at(i).size(); j++) {
-				use.push_back( rules.at( g.at(i).at(j) ) );
-				ruleIndex.push_back( g.at(i).at(j) );
+			for (it = g.at(i).begin(); it!=g.at(i).end(); ++it) {
+				use.push_back( rules.at( *it ) );
+				ss << *it;
 			}
-			ss << ruleOrder( ruleIndex, (g.at(i).size()- 1) );
 			cout << convertRules( use ) << " passes: " << ss.str() << endl;
 		}else if ( !g.at(i).empty() ){
-			if ( !graph->isTrivial( g.at(i).at(0) ) ) {
-				use.push_back( rules.at( g.at(i).at(0) ) );
-				cout << convertRules( use ) << " passes: R" << g.at(i).at(0) << endl;
+			if ( !graph->isTrivial( *it ) ) {
+				use.push_back( rules.at( *it ) );
+				cout << convertRules( use ) << " passes: R" << *it << endl;
 			}else {
-				relation* r = ruler( rules.at( g.at(i).at(0) ) );
+				relation* r = ruler( rules.at( *it ) );
 				if (r != NULL) {
 					int index = relationIndex( r->nameOut() );
 					relations[index]->addTuplesPtr( r->tuplesPtr() );
 				}
 				delete r;
-				cout << 1 << " passes: R" << g.at(i).at(0) << endl;
+				cout << 1 << " passes: R" << *it << endl;
 			}
 		}
 		use.clear();
-		ruleIndex.clear();
 	}
 	sort();
 }

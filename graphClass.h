@@ -71,7 +71,7 @@ public:
 	gnode* nodeat(int index);
 
 	vector<string> DFS( stack<int> stck );
-	vector< vector<int> > DFSindex( stack<int> stck );
+	vector< set<int> > DFSindex( stack<int> stck );
 	stack<int> POT();
 	string traverse( int id );
 	string pathOutput( string path );
@@ -81,7 +81,7 @@ public:
 	string DFSIndexOutput( vector<string> dfs );
 	graphClass* reverse();
 	string SCC();
-	vector< vector<int> > SCCindex();
+	vector< set<int> > SCCindex();
 	bool isTrivial( int index );
 
 	vector< vector<int> > graphOut();
