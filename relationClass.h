@@ -89,7 +89,7 @@ public:
     void sortTuples();
 
     void joinRelation(relation* rel);
-    void conform( vector<ParameterClass*> params, string name );
+    void conform( vector<ParameterClass*>* params, string name );
 };
 
 

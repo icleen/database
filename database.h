@@ -37,7 +37,7 @@ private:
     
     void makeRelations();
     void makeTuples();
-    vector<string> makeTuple(vector<class ParameterClass*> params);
+    vector<string> makeTuple(vector<class ParameterClass*>* params);
     
     // interpretation functions:
     
@@ -78,7 +78,7 @@ private:
 
 //    lab 5 functions:
     graphClass* graph;
-    void makeGraph( const vector<RuleClass*> &rules );
+    void makeGraph( const vector<RuleClass*>* rules );
     void optimizedRules();
     string graphOut( vector< vector<int> > gr );
     void vectorSort( vector<int> &a );

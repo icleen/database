@@ -70,8 +70,8 @@ public:
     string nameOut() {
         return name;
     };
-    vector<ParameterClass*> paramsOut() {
-        return params;
+    vector<ParameterClass*>* paramsOut() {
+        return &params;
     };
 	string toString();
 
@@ -101,8 +101,8 @@ public:
 	PredicateClass* headOut() {
 		return headPredicate;
 	}
-	vector<PredicateClass*> predicatesOut() {
-		return preds;
+	vector<PredicateClass*>* predicatesOut() {
+		return &preds;
 	}
 
 };
@@ -132,18 +132,18 @@ public:
 	void addRules(vector<class RuleClass*> &r);
 	void addQueries(vector<class PredicateClass*> &q);
 	
-    vector<class PredicateClass*> factsOut() {
-        return facts;
+    vector<class PredicateClass*>* factsOut() {
+        return &facts;
     };
-    vector<class PredicateClass*> schemesOut() {
-        return schemes;
+    vector<class PredicateClass*>* schemesOut() {
+        return &schemes;
     };
 
-    vector<class PredicateClass*> queriesOut() {
-        return queries;
+    vector<class PredicateClass*>* queriesOut() {
+        return &queries;
     };
-    vector<class RuleClass*> rulesOut() {
-    	return rules;
+    vector<class RuleClass*>* rulesOut() {
+    	return &rules;
     }
     vector<string> schemeNames();
     

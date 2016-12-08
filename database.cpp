@@ -3,12 +3,12 @@
 
 void Database::makeRelations() {
     
-    vector<class PredicateClass*> schemes = datalog->schemesOut();
-    for (int i = 0; i < schemes.size(); i++) {
-        relation* rel = new relation(schemes[i]->nameOut());
-        vector<class ParameterClass*> params = schemes[i]->paramsOut();
-        for (int j = 0; j < params.size(); j++) {
-            rel->addAttribute(params[j]->toString());
+    vector<class PredicateClass*>* schemes = datalog->schemesOut();
+    for (int i = 0; i < schemes->size(); i++) {
+        relation* rel = new relation(schemes->at(i)->nameOut());
+        vector<class ParameterClass*>* params = schemes->at(i)->paramsOut();
+        for (int j = 0; j < params->size(); j++) {
+            rel->addAttribute(params->at(j)->toString());
         }
         relations.push_back(rel);
     }
@@ -17,23 +17,23 @@ void Database::makeRelations() {
 
 void Database::makeTuples() {
     
-    vector<class PredicateClass*> facts = datalog->factsOut();
-    for (int i = 0; i < facts.size(); i++) {
-        int index = relationIndex(facts[i]->nameOut());
+    vector<class PredicateClass*>* facts = datalog->factsOut();
+    for (int i = 0; i < facts->size(); i++) {
+        int index = relationIndex(facts->at(i)->nameOut());
         if (index == -1) {
 //            cout << "Fact matches no known relations\n";
             return;
         }
-        relations[index]->addTuple(makeTuple(facts[i]->paramsOut()));
+        relations[index]->addTuple( makeTuple( facts->at(i)->paramsOut() ) );
     }
     
 }
 
-vector<string> Database::makeTuple(vector<class ParameterClass*> params) {
+vector<string> Database::makeTuple(vector<class ParameterClass*>* params) {
     
     vector<string> tple;
-    for (int k = 0; k < params.size(); k++) {
-        tple.push_back(params[k]->toString());
+    for (int k = 0; k < params->size(); k++) {
+        tple.push_back(params->at(k)->toString());
     }
     return tple;
     
@@ -53,9 +53,9 @@ int Database::relationIndex(string name) {
 relation* Database::copyRelation(relation* a) {
     
     relation* b = new relation(a->nameOut());
-    vector< vector<string> > tempTuple = a->tuplesOut();
-    for (int i = 0; i < tempTuple.size(); i++) {
-        b->addTuple(tempTuple[i]);
+    vector< vector<string> >* tempTuple = a->tuplesPtr();
+    for (int i = 0; i < tempTuple->size(); i++) {
+        b->addTuple( tempTuple->at(i) );
     }
     b->addAttributes( a->attributesOut() );
     return b;
@@ -78,17 +78,17 @@ int Database::repeatVar(string var) {
 
 string Database::interpretStart() {
 	stringstream out;
-    vector<class PredicateClass*> queries = datalog->queriesOut();
+    vector<class PredicateClass*>* queries = datalog->queriesOut();
     vector<relation*> tempRelations;
     relation* tempRel;
-    for (int i = 0; i < queries.size(); i++) {
-    	out << queries[i]->toString() << "?";
+    for (int i = 0; i < queries->size(); i++) {
+    	out << queries->at(i)->toString() << "?";
 //    	cout << "(" << i + 1 << ") Working...\n";
-    	int index = relationIndex( queries[i]->nameOut() );
+    	int index = relationIndex( queries->at(i)->nameOut() );
     	if ( index < 0 ) {
     		out << " No";
     	}else {
-        	tempRel = queryFind( relations[index], queries[i] );
+        	tempRel = queryFind( relations[index], queries->at(i) );
     //    	cout << "QueryFind?\n";
         	if ( tempRel->size() == 0 ) {
         		out << " No";
@@ -123,21 +123,21 @@ relation* Database::queryFind(relation *relat, PredicateClass *query) {
 	renameOutput = "";
     relation* tempRel = copyRelation(relat);
 //    cout << "Here?\n";
-    vector<ParameterClass*> params = query->paramsOut();
-    for (int i = 0; i < params.size(); i++) {
+    vector<ParameterClass*>* params = query->paramsOut();
+    for (int i = 0; i < params->size(); i++) {
 //    	cout << "(" << i + 1 << ") Working...\n";
-        if (params[i]->typeOut() == "DOM") {
+        if (params->at(i)->typeOut() == "DOM") {
         	// select on the value
-        	tempRel->selector( i, params[i]->toString() );
+        	tempRel->selector( i, params->at(i)->toString() );
         }else {
         	// decide whether the VAR is already in the project list
-            int  repeatIndex = repeatVar( params[i]->toString() );
+            int  repeatIndex = repeatVar( params->at(i)->toString() );
             if (repeatIndex != -1) {
             	//deal with a repeated variable
             	tempRel->selector( i, projectIndex[repeatIndex] );
             }else {
             	// add to the project list for later projection and renaming
-            	projectNames.push_back( params[i]->toString() );
+            	projectNames.push_back( params->at(i)->toString() );
             	projectIndex.push_back( i );
             }
         }

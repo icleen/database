@@ -83,18 +83,23 @@ bool relation::isUnique( vector<string> t ) {
 void relation::sortTuples() {
 //	cout << "Sort start\n";
 	vector<string> tempTuples;
+	string tup;
+	int t;
+	int j;
+	vector<string> vtemp;
+	string temp;
 	for (int i = 0; i < tuples.size(); i++) {
-		 string tup = stringTuple( tuples[i] );
+		 tup = stringTuple( tuples[i] );
 		 tempTuples.push_back(tup);
-		 int t = i;
-		 int j = tempTuples.size() - 2;
+		 t = i;
+		 j = tempTuples.size() - 2;
 		 while ( j >= 0 && tup < tempTuples[j] ) { // while true, swap up
 			 // swaps the temporary variables
-			 string temp = tempTuples[j];
+			 temp = tempTuples[j];
 			 tempTuples[j] = tempTuples[t];
 			 tempTuples[t] = temp;
 			 // swaps the actual tuples
-			 vector<string> vtemp = tuples[j];
+			 vtemp = tuples[j];
 			 tuples[j] = tuples[t];
 			 tuples[t] = vtemp;
 			 t = j;
@@ -103,7 +108,7 @@ void relation::sortTuples() {
 	}
 }
 
-string relation::stringTuple( vector<string> t) {
+string relation::stringTuple( vector<string> t ) {
 	stringstream ss;
 	for (int i = 0; i < t.size(); i++) {
 		ss << t[i];
@@ -196,14 +201,14 @@ void relation::joinRelation( relation* rel ) {
 //	cout << "Done\n";
 }
 
-void relation::conform( vector<ParameterClass*> params, string nme ) {
+void relation::conform( vector<ParameterClass*>* params, string nme ) {
 //	cout << "conforming\n";
 	name = nme;
 	vector<int> project;
 	bool found;
 	string s;
-	for (int i = 0; i < params.size(); i++) {
-		s = params[i]->toString();
+	for (int i = 0; i < params->size(); i++) {
+		s = params->at(i)->toString();
 		found = false;
 		for (int j = 0; j < attributes.size(); j++) {
 			if ( attributes[j] == s && !found ) {

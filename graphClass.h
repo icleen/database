@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <stack>
+#include <set>
 #include <assert.h>
 
 using namespace std;

@@ -33,21 +33,21 @@ relation* Database::ruler( RuleClass* rule ) {
 //	cout << "Ruler\n";
 	PredicateClass* head = rule->headOut();
 //	cout << head->nameOut() << " ";
-	vector< PredicateClass* > preds = rule->predicatesOut();
+	vector< PredicateClass* >* preds = rule->predicatesOut();
 	vector< relation* > tempRels;
 
-	for (int i = 0; i < preds.size(); i++) {
-		string name = preds[i]->nameOut();
+	for (int i = 0; i < preds->size(); i++) {
+		string name = preds->at(i)->nameOut();
 //		cout << name << endl;
 	    int index = relationIndex( name );
 	    if ( index >= 0 ) {
-	    	relation* a = queryFind( relations[index],  preds[i] );
+	    	relation* a = queryFind( relations[index],  preds->at(i) );
 	    	tempRels.push_back(a);
 	    }else {
 	    	return NULL;
 	    }
 	}
-	assert( tempRels.size() == preds.size() );
+	assert( tempRels.size() == preds->size() );
 	if ( tempRels.empty() ) {
 		return NULL;
 	}
@@ -111,9 +111,9 @@ int Database::facts() {
 relation* Database::predicateRelation( relation* rel, PredicateClass* pred ) {
 	relation* tempRel = copyRelation( rel );
 	vector<string> s;
-	vector<ParameterClass*> params = pred->paramsOut();
-	for (int i = 0; i < params.size(); i++) {
-		s.push_back( params[i]->toString() );
+	vector<ParameterClass*>* params = pred->paramsOut();
+	for (int i = 0; i < params->size(); i++) {
+		s.push_back( params->at(i)->toString() );
 	}
 	cleanProjList();
 	addToProjectList( s );
