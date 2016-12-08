@@ -26,10 +26,7 @@ private:
     vector< vector<string> > tuples;
     
     int projectIndex(string attr);
-    
-    bool setFunction( vector< vector<string> >& a, vector<string>& b);
     string stringTuple( vector<string> t);
-
     bool isUnique( vector<string> t );
 
 public:

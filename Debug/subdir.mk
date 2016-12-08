@@ -6,7 +6,9 @@
 CPP_SRCS += \
 ../basicAutomata.cpp \
 ../database.cpp \
+../databaseGraph.cpp \
 ../datalogProgram.cpp \
+../graphClass.cpp \
 ../main.cpp \
 ../naturalJoinFunctions.cpp \
 ../otherAutomata.cpp \
@@ -17,7 +19,9 @@ CPP_SRCS += \
 OBJS += \
 ./basicAutomata.o \
 ./database.o \
+./databaseGraph.o \
 ./datalogProgram.o \
+./graphClass.o \
 ./main.o \
 ./naturalJoinFunctions.o \
 ./otherAutomata.o \
@@ -28,7 +32,9 @@ OBJS += \
 CPP_DEPS += \
 ./basicAutomata.d \
 ./database.d \
+./databaseGraph.d \
 ./datalogProgram.d \
+./graphClass.d \
 ./main.d \
 ./naturalJoinFunctions.d \
 ./otherAutomata.d \

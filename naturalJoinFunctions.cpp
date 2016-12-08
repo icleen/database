@@ -23,7 +23,6 @@ int Database::convertRules( const vector<RuleClass*> &rules ) {
 		times++;
 	}while ( relationSize != facts() );
 //	cout << "Schemes populated after " << times << " passes through the Rules.\n";
-	cleanProjList();
 	renameOutput = "";
 	sort();
 	return times;
@@ -56,7 +55,8 @@ relation* Database::ruler( RuleClass* rule ) {
 		temp->conform( head->paramsOut(), head->nameOut() );
 	}else {
 		for (int j = 1; j < tempRels.size(); j++) {
-			temp = naturalJoin( temp, tempRels.at(j) );
+			temp->joinRelation( tempRels.at(j) );
+			temp->selectSame();
 		}
 		temp->conform( head->paramsOut(), head->nameOut() );
 	}
@@ -66,59 +66,12 @@ relation* Database::ruler( RuleClass* rule ) {
 	return temp;
 }
 
-
-relation* Database::naturalJoin( relation* &a, relation* &b ) {
-//	cout << "naturalJoin\n";
-	cleanProjList();
-	cleanSelList();
-	totalAtts = 0;
-//	addToProjectList( a->attributesOut() );
-	a->joinRelation( b );
-//	cout << "Selecting\n";
-	a->selectSame();
-//	cout << "Done\n";
-	return a;
-}
-
-
-void Database::addToProjectList( const vector<string> &atts ) {
-//	cout << "Adding to project list\n";
-	int i;
-	bool found = false;
-	for (i = 0; i < atts.size(); i++) {
-		found = false;
-		for (int j = 0; j < projectNames.size(); j++) {
-			if (projectNames[j] == atts[i]) {
-				found = true;
-			}
-		}
-		if ( !found ) {
-			projectNames.push_back(atts[i]);
-			projectIndex.push_back(i);
-		}
-	}
-//	cout << "Done\n";
-}
-
 int Database::facts() {
 	int amount = 0;
 	for (int i = 0; i < relations.size(); i++) {
 		amount += relations[i]->size();
 	}
 	return amount;
-}
-
-relation* Database::predicateRelation( relation* rel, PredicateClass* pred ) {
-	relation* tempRel = copyRelation( rel );
-	vector<string> s;
-	vector<ParameterClass*>* params = pred->paramsOut();
-	for (int i = 0; i < params->size(); i++) {
-		s.push_back( params->at(i)->toString() );
-	}
-	cleanProjList();
-	addToProjectList( s );
-	projector( tempRel );
-	return tempRel;
 }
 
 

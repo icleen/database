@@ -78,31 +78,3 @@ void Database::optimizedRules() {
 	sort();
 }
 
-void Database::vectorSort( vector<int> &a ) {
-	int x;
-	int temp;
-	for (int i = 0; i < a.size(); i++) {
-		x = i;
-		for (int j = i; j < a.size(); j++) {
-			if ( a[x] > a[j] ) {
-				temp = a[j];
-				a[j] = a[x];
-				a[x] = temp;
-				x = j;
-			}
-		}
-	}
-}
-
-string Database::ruleOrder( vector<int> a, int b ) {
-	stringstream ss;
-	vectorSort( a );
-	for (int k = 0; k < a.size(); k++) {
-		ss << "R" << a.at(k);
-		if ( k < b ) {
-			ss << ",";
-		}
-	}
-	return ss.str();
-}
-

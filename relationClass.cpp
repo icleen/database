@@ -161,15 +161,6 @@ int relation::projectIndex(string attr) {
     return -1;
 }
 
-bool relation::setFunction( vector< vector<string> >& a, vector<string>& b) {
-	for (int i = 0; i < a.size(); i++) {
-		if ( a[i] == b ) {
-			return false;
-		}
-	}
-	return true;
-}
-
 void relation::rename( int attrIndex, string attrName) {
 	if ( attrIndex >= attributes.size() ) {
 		attributes.push_back(attrName);

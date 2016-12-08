@@ -40,40 +40,23 @@ private:
     vector<string> makeTuple(vector<class ParameterClass*>* params);
     
     // interpretation functions:
-    
     relation* queryFind(relation* relat, PredicateClass* query);
     void projector(relation* &r);
     void renamer(relation* &rel);
-    vector<myNode*> projectList;
-    
+
     vector<string> projectNames;
     vector<int> projectIndex;
-
     int relationIndex(string name);
     relation* copyRelation(relation* a);
     int repeatVar(string var);
     
     // Lab 4 functions:
-    relation* predicateRelation( relation* rel, PredicateClass* pred );
     int convertRules( const vector<RuleClass*> &rules );
     relation* ruler( RuleClass* rule );
-    relation* naturalJoin( relation* &a, relation* &b );
-    void addToProjectList( const vector<string> &s );
-    bool inProjectList( const string &name, const int &index );
-    relation* conformToHead( PredicateClass* &head, relation* &r );
-    void reorder( relation* &rel );
-    int nameLocation( const string &s, relation* &r );
-    int totalAtts;
-    queue<int> selectList;
-
     string relationsOut();
     void renameOutputFunc(relation* rel, int b);
     int facts();
-
-    void cleanProjList();
-    void cleanSelList();
     void clear();
-
     void sort();
 
 //    lab 5 functions:
@@ -81,8 +64,6 @@ private:
     void makeGraph( const vector<RuleClass*>* rules );
     void optimizedRules();
     string graphOut( vector< vector<int> > gr );
-    void vectorSort( vector<int> &a );
-    string ruleOrder( vector<int> a, int b );
 
 public:
     Database(datalogClass* data) : datalog(data) {

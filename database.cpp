@@ -192,24 +192,10 @@ void Database::renameOutputFunc(relation* rel, int b) {
 }
 
 void Database::clear() {
-	cleanProjList();
 	for (int i = 0; i < relations.size(); i++) {
 		delete relations[i];
 	}
 	delete graph;
-}
-
-void Database::cleanProjList() {
-	for (int i = 0; i < projectList.size(); i++) {
-		delete projectList[i];
-	}
-	projectList.clear();
-}
-
-void Database::cleanSelList() {
-	while(!selectList.empty()) {
-		selectList.pop();
-	}
 }
 
 void Database::sort() {
